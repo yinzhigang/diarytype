@@ -1,6 +1,6 @@
 {% extends "admin/layout.html" %}
-
 {% block title %}系统设置{% endblock %}
+{% set setting_active = 'active' %}
 
 {% block content %}
 <div id="containerHolder">
@@ -11,14 +11,15 @@
                <li><a href="#">导入导出</a></li>
            </ul>
        </div>
-       <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">Print resources</a></h2>
+       <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">系统设置</a></h2>
        
     <div id="main">
         <h3>系统设置：</h3>
 		<form action="/admin/setting" method="post">
 		<fieldset>
 		    <p><label class="caption">博客名称：</label><input id="id_name" type="text" class="text-long" value="{{ blog.name }}" name="name" /></p>
-		    <p><label class="caption">博客简介：</label><textarea id="id_description" rows="10" cols="40" name="description">{{ blog.description }}</textarea></p>
+		    <p><label class="caption">博客简介：</label><textarea id="id_description" name="description" style="width:500px;height:80px;">{{ blog.description }}</textarea></p>
+		    <p><label class="caption">自定义Header：</label><textarea id="id_custom_header" name="custom_header" style="width:500px;height:80px;">{{ blog.custom_header }}</textarea></p>
 		    <input type="submit" value=" 保 存 " />
 		</fieldset>
 		</form>

@@ -46,7 +46,7 @@ ul { list-style:none; }
 
 #content { padding-top:1.5em; width:45.5em; padding-left:.2em; float:left; }
 
-#content h2 { font-size:1.17em; font-weight:normal; letter-spacing:.1em; vertical-align:middle; }
+#content h2 { font-size:1.4em; font-weight:normal; letter-spacing:.1em; vertical-align:middle; }
 
 #content h2 span { font-size:.86em; }
 
@@ -56,11 +56,11 @@ ul { list-style:none; }
 
 #content .cc-lisence { color:#808080; margin-bottom:1.8em; padding:.2em 0 .6em 1.3em; border-left:5px solid #EEE; }
 
-#content #posts li { margin-bottom:1.5em; padding-bottom:1.2em; border-bottom:5px solid #EEE; }
+#content #posts li.list { margin-bottom:1.5em; padding-bottom:1.2em; border-bottom:5px solid #EEE; }
 
-#content #posts li h3 { margin:.5em auto 1.2em; font-size:.92em; font-weight:normal; color:#999; }
+#content #posts li.list h3 { margin:.5em auto 1.2em; font-size:.92em; font-weight:normal; color:#999; }
 
-#content #posts .postBody { margin-bottom:2em; line-height:1.7em; }
+#content #posts .postBody { margin-bottom:2em; line-height:1.7em; font-size:1.2em;}
 
 #content #posts .postBody a { text-decoration:underline; }
 
@@ -69,6 +69,8 @@ ul { list-style:none; }
 #content #posts .postBody p { margin-bottom:1em; line-height:1.7em; }
 
 #content #posts .postBody img { margin:.4em 0; clear:both; }
+
+#content #posts .postBody li { background:url(images/bullet.gif) no-repeat .1em .4em; padding-left:1.3em; margin:.2em 0; line-height:1.7em; }
 
 #content #posts .postFooter { color:#808080; line-height:2.2em; }
 

@@ -13,21 +13,21 @@
 </head>
 <body>
 <div id="wrapper">
-    <h1><a href="#"><span>Transdmin Light</span></a></h1>
+    <h1><a href="#">Diary Type</a></h1>
     
     <ul id="mainNav">
-        <li><a href="/admin/post/new">写新日志</a></li>
-        <li><a href="/admin/posts">日志管理</a></li>
+        <li><a href="/admin/post/new" class="{{ post_active|default('') }}">写新日志</a></li>
+        <li><a href="/admin/posts" class="{{ posts_active|default('') }}">日志管理</a></li>
         <li><a href="#">评论管理</a></li>
         <li><a href="#">分类管理</a></li>
         <li><a href="#">友情链接</a></li>
-        <li><a href="/admin/setting">系统设置</a></li>
+        <li><a href="/admin/setting" class="{{ setting_active|default('') }}">系统设置</a></li>
         <li class="logout"><a href="{{ logout_url }}">LOGOUT</a></li>
     </ul>
 
     {% block content %}{% endblock %}
 
-    <p id="footer">Feel free to use and customize it. <a href="http://www.perspectived.com">Credit is appreciated.</a></p>
+    <p id="footer">Powerd by <a href="http://diarytype.appspot.com/" target="_blank">Diary Type</a> with Google App Engine.</p>
 </div>
 </body>
 </html>

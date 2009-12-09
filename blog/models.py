@@ -9,6 +9,7 @@ class Blog(db.Model):
     enable_xmlrpc = db.BooleanProperty(default=False)
     owner = db.StringProperty(multiline=False,default='admin')
     theme = db.StringProperty(multiline=False,default='default')
+    custom_header = db.TextProperty(default='')
     
     @classmethod
     def get(cls):

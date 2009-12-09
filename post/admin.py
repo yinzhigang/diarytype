@@ -5,16 +5,22 @@ import web
 from post.models import Post, Tag
 from util.template import render
 from util import requires_admin
+from util.pager import PagerQuery
 
-class posts:
+class posts(object):
     """日志列表处理"""
     @requires_admin
     def GET(self):
-        posts = Post.all().order('-date')
+        inp = web.input()
+        bookmark = inp.get('bookmark')
         
-        return render('admin/posts.html',posts=posts)
+        query = PagerQuery(Post).order('-date')
+        prev, posts, next = query.fetch(10, bookmark)
+        # posts = Post.all().order('-date')
+        
+        return render('admin/posts.html',posts=posts,prev=prev,next=next)
 
-class post:
+class post(object):
     """日志新增修改"""
     @requires_admin
     def GET(self, post_id=None):
@@ -52,5 +58,15 @@ class post:
             for tag in tags:
                 Tag.add(tag)
         post.save()
+        
+        raise web.seeother('/admin/posts')
+
+class delete(object):
+    """删除日志"""
+    @requires_admin
+    def GET(self, post_id):
+        if post_id:
+            post = Post.get_by_id(int(post_id))
+            post.delete()
         
         raise web.seeother('/admin/posts')

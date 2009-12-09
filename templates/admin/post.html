@@ -1,5 +1,10 @@
 {% extends "admin/layout.html" %}
 {% block title %}{{ title }}{% endblock %}
+{% if post %}
+{% set posts_active = 'active' %}
+{% else %}
+{% set post_active = 'active' %}
+{% endif %}
 
 {% block content %}
 <script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
@@ -40,7 +45,7 @@ tinyMCE.init({
                <li><a href="#">Events</a></li>
            </ul>
        </div>
-       <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">Print resources</a></h2>
+       <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">{{ title }}</a></h2>
        
     <div id="main">
         <h3>{{ title }}：</h3>

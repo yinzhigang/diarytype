@@ -4,13 +4,19 @@ import web
 
 from post.models import Post
 from util.template import render
+from util.pager import PagerQuery
 
 class posts(object):
     """首页文章列表"""
     def GET(self):
-        posts = Post.all().filter('hidden =',False).order('-date')
+        inp = web.input()
+        bookmark = inp.get('bookmark')
         
-        return render('theme/index.html',posts=posts)
+        query = PagerQuery(Post).filter('hidden =',False).order('-date')
+        prev, posts, next = query.fetch(10, bookmark)
+        # posts = Post.all().filter('hidden =',False).order('-date')
+        
+        return render('theme/index.html',posts=posts,prev=prev,next=next)
 
 class show(object):
     """显示单篇日志"""
