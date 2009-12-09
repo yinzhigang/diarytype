@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
 import web
-from web.contrib.template import render_jinja
 
-urls = (
-    '/(.*)', 'hello'
-)
-app = web.application(urls, globals())
+import settings
+from util.template import render
 
-render = render_jinja(
-        'templates',   # Set template directory.
-        encoding = 'utf-8',                         # Encoding.
-    )
-
+app = web.application(settings.urls, globals())
 
 class hello:        
     def GET(self, name):
         if not name: 
             name = 'world'
-        return render.hello(name=name)
+        return 'hello ' + name
 
 if __name__ == "__main__":
     app.cgirun()

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}{% endblock %} 后台管理 - Diary Type</title>
+<!-- CSS -->
+<link href="/static/admin/css/transdmin.css" rel="stylesheet" type="text/css" media="screen" />
+<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/static/admin/css/ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/static/admin/css/ie7.css" /><![endif]-->
+
+<!-- JavaScripts-->
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <h1><a href="#"><span>Transdmin Light</span></a></h1>
+    
+    <ul id="mainNav">
+        <li><a href="/admin/post/new">写新日志</a></li>
+        <li><a href="/admin/posts">日志管理</a></li>
+        <li><a href="#">评论管理</a></li>
+        <li><a href="#">分类管理</a></li>
+        <li><a href="#">友情链接</a></li>
+        <li><a href="/admin/setting">系统设置</a></li>
+        <li class="logout"><a href="{{ logout_url }}">LOGOUT</a></li>
+    </ul>
+
+    {% block content %}{% endblock %}
+
+    <p id="footer">Feel free to use and customize it. <a href="http://www.perspectived.com">Credit is appreciated.</a></p>
+</div>
+</body>
+</html>
