@@ -9,7 +9,7 @@ from util import filters
 from blog.models import Blog
 
 def load_theme(name):
-    """加载自定义模板"""
+    """加载自定义模板,优先扫描数据库数据,而后扫描本地文件"""
     theme = Blog.get().theme
     theme_path = os.path.join(THEME_TEMPLATE_DIR, theme)
     if os.path.isdir(theme_path):
@@ -22,7 +22,7 @@ def load_theme(name):
             source = None
     else:
         source = None
-    return source
+    return source, None, lambda: False
 
 loader = PrefixLoader({
     'theme': FunctionLoader(load_theme),
@@ -32,6 +32,6 @@ env = Environment(loader=loader,auto_reload=DEBUG)
 env.filters['date'] = filters.datetimeformat
 
 def render(template, **kwargs):
-    """docstring for render"""
+    """渲染模板"""
     t = env.get_template(template)
     return t.render(**kwargs)

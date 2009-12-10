@@ -2,11 +2,13 @@
 
 import web
 
+from blog.base_front import BaseFront
+
 from post.models import Post
 from util.template import render
 from util.pager import PagerQuery
 
-class posts(object):
+class posts(BaseFront):
     """首页文章列表"""
     def GET(self):
         inp = web.input()
@@ -18,7 +20,7 @@ class posts(object):
         
         return render('theme/index.html',posts=posts,prev=prev,next=next)
 
-class show(object):
+class show(BaseFront):
     """显示单篇日志"""
     def GET(self, post_id):
         post = Post.get_by_id(int(post_id))

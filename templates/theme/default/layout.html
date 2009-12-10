@@ -2,16 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>殷志刚</title>
+<title>{{ blog.name|e }}</title>
 <link href="/theme/default/style.css" rel="stylesheet" type="text/css" media="screen" />
+{{ blog.custom_header }}
 </head>
 
 <body>
 <div id="{% block page_div_id %}index{% endblock %}">
 	<div id="container">
 		<div id="header">
-			<h1 class="blogName"><a href="/">开发中的系统</a></h1>
-			<div class="description">系统开发中，现在没什么好看的......</div>
+			<h1 class="blogName"><a href="/">{{ blog.name|e }}</a></h1>
+			<div class="description">{{ blog.description|e }}</div>
 			<div class="clear"></div>
             <div id="cats" class="module">
 	<div class="modTop"></div>
