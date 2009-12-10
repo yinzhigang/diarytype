@@ -3,6 +3,7 @@
 import web
 
 from post.models import Post, Tag
+from category.models import Category
 from util.template import render
 from util import requires_admin
 from util.pager import PagerQuery
@@ -20,7 +21,7 @@ class posts(object):
         
         return render('admin/posts.html',posts=posts,prev=prev,next=next)
 
-class post(object):
+class edit(object):
     """日志新增修改"""
     @requires_admin
     def GET(self, post_id=None):
@@ -32,7 +33,12 @@ class post(object):
         else:
             title = u'写新日志'
         
-        return render('admin/post.html',post=post,title=title)
+        categories = Category.all().order('sort')
+        
+        return render('admin/post.html',
+                      post=post,
+                      title=title,
+                      categories=categories)
     
     @requires_admin
     def POST(self, post_id=None):
@@ -50,6 +56,10 @@ class post(object):
         post.allow_comment = bool(inp.get('allow_comment'))
         post.allow_ping = bool(inp.get('allow_ping'))
         post.hidden = bool(inp.get('hidden'))
+        
+        category_key = inp.get('category')
+        if category_key:
+            post.category = Category.get(category_key)
         
         tags = inp.tags
         if tags:

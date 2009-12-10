@@ -9,7 +9,8 @@
 <!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/static/admin/css/ie7.css" /><![endif]-->
 
 <!-- JavaScripts-->
-<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.3.2.min.js"></script>
+{% block header %}{% endblock %}
 </head>
 <body>
 <div id="wrapper">
@@ -19,8 +20,9 @@
         <li><a href="/admin/post/new" class="{{ post_active|default('') }}">写新日志</a></li>
         <li><a href="/admin/posts" class="{{ posts_active|default('') }}">日志管理</a></li>
         <li><a href="#">评论管理</a></li>
-        <li><a href="#">分类管理</a></li>
+        <li><a href="/admin/categories" class="{{ category_active|default('') }}">分类管理</a></li>
         <li><a href="#">友情链接</a></li>
+        <li><a href="#">模板</a></li>
         <li><a href="/admin/setting" class="{{ setting_active|default('') }}">系统设置</a></li>
         <li class="logout"><a href="{{ logout_url }}">LOGOUT</a></li>
     </ul>

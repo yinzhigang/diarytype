@@ -16,10 +16,10 @@
 ###############################################################################
 import web
 
-from settings import urls
+import settings
 from util.template import render
 
-app = web.application(urls, globals())
+app = web.application(settings.urls, globals())
 
 class hello:
     def GET(self, name):

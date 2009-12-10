@@ -7,9 +7,12 @@ Created on Nov 25, 2009
 
 from google.appengine.ext import db
 
+from category.models import Category
+
 class Post(db.Model):
     """文章存储结构"""
     title = db.StringProperty()
+    category = db.ReferenceProperty(Category)
     content = db.TextProperty()
     tags = db.StringListProperty()
     excerpt = db.TextProperty()

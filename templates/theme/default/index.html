@@ -2,111 +2,116 @@
 
 {% block content %}
 <div id="innerContainer">
-   <div class="innerTop"></div>
-    <div id="outerContent">
-        <div id="content">
-            <div class="contentTop"></div>
-            <ul id="posts">
-                <div class="postsTop"></div>
-                {% for post in posts %}
-                <li class="list">
-                    <div class="postHeader">
-                        <h2><a href="/post/{{ post.key().id() }}">{{ post.title|e }}</a><!-- <span class='category'> - [<a href='/c1699300/'>en-public</a>]</span> --></h2>
-                        <h3>{{ post.date|date("%Y-%m-%d") }}</h3>
-                    </div>
-                    <div class="postBody">
-                        {{ post.content }}
-                        <div class="clear"></div>
-                    </div>
-                    <div class="postFooter">
-                        <div class="tags">Tag：{{ post.taglist|e }} </div>
-                        <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="/post/{{ post.key().id() }}" class="readmore">阅读全文</a> | <a href="/post/{{ post.key().id() }}#cmt" class="cmt">评论 <span class="count">12</span></a> | <a href="#" class='edit'>编辑</a></div>
-                    </div>
-                </li>
-                {% endfor %}
-                <div class="postsBottom"></div>
+  <div class="innerTop"></div>
+  <div id="outerContent">
+    <div id="content">
+      <div class="contentTop"></div>
+      <ul id="posts">
+        <div class="postsTop"></div>
+        {% for post in posts %}
+        <li class="list">
+          <div class="postHeader">
+            <h2>
+              <a href="/post/{{ post.key().id() }}">{{ post.title|e }}</a>
+              {% if post.category %}
+              <span class='category'> - [<a href='#'>{{ post.category.name }}</a>]</span>
+              {% endif %}
+            </h2>
+            <h3>{{ post.date|date("%Y-%m-%d") }}</h3>
+          </div>
+          <div class="postBody">
+            {{ post.content }}
+            <div class="clear"></div>
+          </div>
+          <div class="postFooter">
+            <div class="tags">Tag：{{ post.taglist|e }} </div>
+            <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="/post/{{ post.key().id() }}" class="readmore">阅读全文</a> | <a href="/post/{{ post.key().id() }}#cmt" class="cmt">评论 <span class="count">12</span></a> | <a href="#" class='edit'>编辑</a></div>
+          </div>
+        </li>
+        {% endfor %}
+        <div class="postsBottom"></div>
+      </ul>
+      <div class="pageNavi">
+        {% if prev %}
+        <a href="/">第一页</a>
+        <a href="?bookmark={{ prev }}">上一页</a>
+        {% endif %}
+        {% if next %}
+        <a href="?bookmark={{ next }}">下一页</a>
+        {% endif %}
+      </div>
+      <div class="contentBottom"></div>                    
+    </div>
+  </div>
+  <div id="outerSidebar">
+    <div id="sidebar">
+      <div class="sideTop"></div>
+      <!-- <div id="calendar" class="module">
+        <div class="modTop"></div>
+        <h2>日历</h2>
+
+        <div class="modBody">
+          <script type="text/javascript">var _blogid=1017919;var iCY=2009;var iCM=12;var iCD=07;var iCS=false;var sDCP = "";var sDCN = "";var LDWD = new Array();</script><script src="/user/js/calendar2.js"></script></div>
+          <div class="modBottom"></div>
+        </div> -->
+        <div id="nPosts" class="module">
+          <div class="modTop"></div>
+          <h2>最新日志</h2>
+          <div class="modBody">
+            <ul><li><a href='/logs/52531610.html'>在那晚空前的后摇飨宴上我们的身躯不曾动摇</a></li>
+
+              <li><a href='/logs/52531012.html'>A CUP IS A TRAGEDY</a></li>
+              <li><a href='/logs/52301770.html'>后摇之夜</a></li>
+              <li><a href='/logs/52130144.html'>Astro</a></li>
+              <li><a href='/logs/51709269.html'>啊</a></li>
+              <li><a href='/logs/51046579.html'>It doesn't matter</a></li>
+              <li><a href='/logs/49031560.html'>刷过去...</a></li>
+              <li><a href='/logs/49031370.html'>“卡特琳娜·布雷娅”梦魇</a></li>
+              <li><a href='/logs/48254170.html'>迟早，我们会再见的，一路走好</a></li>
+              <li><a href='/logs/47885432.html'>电子乐@SH</a></li>
+
             </ul>
-            <div class="pageNavi">
-                {% if prev %}
-                <a href="/">第一页</a>
-                <a href="?bookmark={{ prev }}">上一页</a>
-                {% endif %}
-                {% if next %}
-                <a href="?bookmark={{ next }}">下一页</a>
-                {% endif %}
-            </div>
-            <div class="contentBottom"></div>                    
+            <div class="more"><a href="/logs/">全部日志>></a></div>
+          </div>
+          <div class="modBottom"></div>
         </div>
-    </div>
-    <div id="outerSidebar">
-        <div id="sidebar">
-            <div class="sideTop"></div>
-                <!-- <div id="calendar" class="module">
-                    <div class="modTop"></div>
-                    <h2>日历</h2>
+        <div id="search" class="module">
+          <div class="modTop"></div>
+          <h2>搜索</h2>
+          <div class="modBody">
+            <form name="SearchForm" method="get" target="_blank" action="http://search.blogbus.com/search">
 
-                    <div class="modBody">
-                    <script type="text/javascript">var _blogid=1017919;var iCY=2009;var iCM=12;var iCD=07;var iCS=false;var sDCP = "";var sDCN = "";var LDWD = new Array();</script><script src="/user/js/calendar2.js"></script></div>
-                    <div class="modBottom"></div>
-                </div> -->
-            <div id="nPosts" class="module">
-                <div class="modTop"></div>
-                <h2>最新日志</h2>
-                <div class="modBody">
-                <ul><li><a href='/logs/52531610.html'>在那晚空前的后摇飨宴上我们的身躯不曾动摇</a></li>
+              <input type="text" name="q" class="textField" />
+              <input type="submit" class="button" value="搜索" />
+              <input type="hidden" name="b" value="1017919"/>
+              <input type="hidden" name="dir" value="oneblog"/>
+              <div class="clear"></div>
+            </form>
+          </div>
+          <div class="modBottom"></div>
+        </div><div id="nComments" class="module">
 
-                <li><a href='/logs/52531012.html'>A CUP IS A TRAGEDY</a></li>
-                <li><a href='/logs/52301770.html'>后摇之夜</a></li>
-                <li><a href='/logs/52130144.html'>Astro</a></li>
-                <li><a href='/logs/51709269.html'>啊</a></li>
-                <li><a href='/logs/51046579.html'>It doesn't matter</a></li>
-                <li><a href='/logs/49031560.html'>刷过去...</a></li>
-                <li><a href='/logs/49031370.html'>“卡特琳娜·布雷娅”梦魇</a></li>
-                <li><a href='/logs/48254170.html'>迟早，我们会再见的，一路走好</a></li>
-                <li><a href='/logs/47885432.html'>电子乐@SH</a></li>
+          <div class="modTop"></div>
+          <h2>最新评论</h2>
+          <div class="modBody">
+            <ul><li><span class='author'>eva</span>：<a href='/logs/52531610.html#cmt'>您的回复看的我热泪盈眶...啊......</a></li><li><span class='author'><a href="http://seah.blogbus.com" target="_blank">Mormo</a></span>：<a href='/logs/52531610.html#cmt'>后搖有力量</a></li><li><span class='author'><a href="http://freakofree.blogbus.com" target="_blank">Freakofree</a></span>：<a href='/logs/52531610.html#cmt'>恩 那如果你去看大江的&quot;个人的体验&quot;...</a></li><li><span class='author'><a href="http://polaris14551.blogbus.com" target="_blank"> 摇光</a></span>：<a href='/logs/52531012.html#cmt'>李老师你可以的。。</a></li><li><span class='author'><a href="http://polaris14551.blogbus.com" target="_blank"> 摇光</a></span>：<a href='/logs/52531610.html#cmt'>原来MAO的场子已经算不错了咩...</a></li><li><span class='author'><a href="http://seekmusic.blogbus.com" target="_blank">竹木刀</a></span>：<a href='/logs/52531610.html#cmt'>生活频道，私人内容删掉了。...</a></li><li><span class='author'><a href="http://zxiaoniu.blogbus.com" target="_blank">之</a></span>：<a href='/logs/52531610.html#cmt'>有钱的李老湿·····...</a></li><li><span class='author'><a href="http://seekmusic.blogbus.com" target="_blank">竹木刀</a></span>：<a href='/logs/52531610.html#cmt'>推了你这篇，还给了个黄金位置。...</a></li><li><span class='author'><a href="http://freakofree.blogbus.com" target="_blank">Freakofree</a></span>：<a href='/logs/52531610.html#cmt'>1. 那是大江建三郎的某书诶 你要完蛋了这都不知道
+              2...</a></li><li><span class='author'>遥遥</span>：<a href='/logs/52531012.html#cmt'>你们可以的，大不大要问麦多吧...</a></li></ul>
 
-                </ul>
-                <div class="more"><a href="/logs/">全部日志>></a></div>
-                </div>
-                <div class="modBottom"></div>
             </div>
-<div id="search" class="module">
-<div class="modTop"></div>
-<h2>搜索</h2>
-<div class="modBody">
-<form name="SearchForm" method="get" target="_blank" action="http://search.blogbus.com/search">
+            <div class="modBottom"></div>
+          </div><div id="archives" class="module">
+            <div class="modTop"></div>
+            <h2>存档</h2>
+            <div class="modBody">
+              <ul><li><a href='/archives/1006021.html'>2005/04/01-2005/04/30</a></li><li><a href='/archives/1007585.html'>2005/05/01-2005/05/31</a></li><li><a href='/archives/1008081.html'>2005/06/01-2005/06/30</a></li><li><a href='/archives/1009207.html'>2005/07/01-2005/07/31</a></li><li><a href='/archives/1010154.html'>2005/08/01-2005/08/31</a></li><li><a href='/archives/1011888.html'>2005/09/01-2005/09/30</a></li></ul>
 
-	<input type="text" name="q" class="textField" />
-	<input type="submit" class="button" value="搜索" />
-	<input type="hidden" name="b" value="1017919"/>
-	<input type="hidden" name="dir" value="oneblog"/>
-	<div class="clear"></div>
-</form>
-</div>
-<div class="modBottom"></div>
-</div><div id="nComments" class="module">
-
-<div class="modTop"></div>
-<h2>最新评论</h2>
-<div class="modBody">
-<ul><li><span class='author'>eva</span>：<a href='/logs/52531610.html#cmt'>您的回复看的我热泪盈眶...啊......</a></li><li><span class='author'><a href="http://seah.blogbus.com" target="_blank">Mormo</a></span>：<a href='/logs/52531610.html#cmt'>后搖有力量</a></li><li><span class='author'><a href="http://freakofree.blogbus.com" target="_blank">Freakofree</a></span>：<a href='/logs/52531610.html#cmt'>恩 那如果你去看大江的&quot;个人的体验&quot;...</a></li><li><span class='author'><a href="http://polaris14551.blogbus.com" target="_blank"> 摇光</a></span>：<a href='/logs/52531012.html#cmt'>李老师你可以的。。</a></li><li><span class='author'><a href="http://polaris14551.blogbus.com" target="_blank"> 摇光</a></span>：<a href='/logs/52531610.html#cmt'>原来MAO的场子已经算不错了咩...</a></li><li><span class='author'><a href="http://seekmusic.blogbus.com" target="_blank">竹木刀</a></span>：<a href='/logs/52531610.html#cmt'>生活频道，私人内容删掉了。...</a></li><li><span class='author'><a href="http://zxiaoniu.blogbus.com" target="_blank">之</a></span>：<a href='/logs/52531610.html#cmt'>有钱的李老湿·····...</a></li><li><span class='author'><a href="http://seekmusic.blogbus.com" target="_blank">竹木刀</a></span>：<a href='/logs/52531610.html#cmt'>推了你这篇，还给了个黄金位置。...</a></li><li><span class='author'><a href="http://freakofree.blogbus.com" target="_blank">Freakofree</a></span>：<a href='/logs/52531610.html#cmt'>1. 那是大江建三郎的某书诶 你要完蛋了这都不知道
-2...</a></li><li><span class='author'>遥遥</span>：<a href='/logs/52531012.html#cmt'>你们可以的，大不大要问麦多吧...</a></li></ul>
-
-</div>
-<div class="modBottom"></div>
-</div><div id="archives" class="module">
-<div class="modTop"></div>
-<h2>存档</h2>
-<div class="modBody">
-<ul><li><a href='/archives/1006021.html'>2005/04/01-2005/04/30</a></li><li><a href='/archives/1007585.html'>2005/05/01-2005/05/31</a></li><li><a href='/archives/1008081.html'>2005/06/01-2005/06/30</a></li><li><a href='/archives/1009207.html'>2005/07/01-2005/07/31</a></li><li><a href='/archives/1010154.html'>2005/08/01-2005/08/31</a></li><li><a href='/archives/1011888.html'>2005/09/01-2005/09/30</a></li></ul>
-
-</div>
-<div class="modBottom"></div>
-</div>
-            <div class="sideBottom"></div>
+            </div>
+            <div class="modBottom"></div>
+          </div>
+          <div class="sideBottom"></div>
         </div>
+      </div>
+      <div class="innerBottom"></div>
+      <div class="clear"></div>
     </div>
-    <div class="innerBottom"></div>
-    <div class="clear"></div>
-</div>
 {% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% set category_active = 'active' %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/category/new"{% if not category %} class="active"{% endif %}>新增分类</a></li>
+        <li><a href="/admin/categories">分类列表</a></li>
+      </ul>
+    </div>
+    <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">{{ title }}</a></h2>
+
+    <div id="main">
+      <h3>{{ title }}：</h3>
+      <form action="" method="post">
+        <fieldset>
+          <p><label class="caption">名称：</label><input id="id_name" type="text" class="title" value="{{ category.name }}" name="name" /></p>
+          <input type="submit" value=" 发 布 " />
+        </fieldset>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

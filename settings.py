@@ -6,9 +6,13 @@ urls = (
     '/admin/?', 'blog.admin.setting',
     
     '/admin/posts', 'post.admin.posts',
-    '/admin/post/new', 'post.admin.post',
-    '/admin/post/edit/(\d+)', 'post.admin.post',
+    '/admin/post/new', 'post.admin.edit',
+    '/admin/post/edit/(\d+)', 'post.admin.edit',
     '/admin/post/delete/(\d+)', 'post.admin.delete',
+    
+    '/admin/categories', 'category.admin.categories',
+    '/admin/category/new', 'category.admin.edit',
+    '/admin/category/edit/(\d+)', 'category.admin.edit',
     
     '/admin/setting', 'blog.admin.setting',
     '/admin/import', 'blog.admin.import_wordpress',

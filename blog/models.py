@@ -24,3 +24,7 @@ class Blog(db.Model):
             cache['blog'] = blog
         return blog
     
+    def update(self):
+        """更新博客信息并清除缓存"""
+        cache['blog'] = self
+        self.save()

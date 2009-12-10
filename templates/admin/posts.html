@@ -4,48 +4,49 @@
 
 {% block content %}
 <div id="containerHolder">
-   <div id="container">
-       <div id="sidebar">
-           <ul class="sideNav">
-               <li><a href="/admin/posts" class="active">所有文章</a></li>
-               <li><a href="#">草稿箱</a></li>
-           </ul>
-       </div>
-       
-       <!-- h2 stays for breadcrumbs -->
-       <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/posts" class="active">日志列表</a></h2>
-       
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/posts" class="active">所有文章</a></li>
+        <li><a href="#">草稿箱</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/posts" class="active">日志列表</a></h2>
+
     <div id="main">
-    <h3>日志列表</h3>
-    
-    <table cellpadding="0" cellspacing="0" class="list">
+      <h3>日志列表</h3>
+
+      <table cellpadding="0" cellspacing="0" class="list">
         <thead>
-            <tr>
-                <th>ID</th><th width="50%">标题</th><th>日期</th><th>操作</th>
-            </tr>
+          <tr>
+            <th>ID</th><th width="50%">标题</th><th>日期</th><th>操作</th>
+          </tr>
         </thead>
         <tbody>
-        {% for post in posts -%}
-            <tr class="{{ loop.cycle('odd', '') }}">
-                <td>{{ post.key().id() }}</td>
-                <td>{{ post.title|e }}</td>
-                <td>{{ post.date|date('%Y-%m-%d %H:%M') }}</td>
-                <td class="action">
-                    <a href="#" class="view">查看</a>
-                    <a href="/admin/post/edit/{{ post.key().id() }}" class="edit">修改</a>
-                    <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  post.key().id() }}';return false;" class="delete">删除</td>
-            </tr>
-        {%- endfor %}
+          {% for post in posts -%}
+          <tr class="{{ loop.cycle('odd', '') }}">
+            <td>{{ post.key().id() }}</td>
+            <td>{{ post.title|e }}</td>
+            <td>{{ post.date|date('%Y-%m-%d %H:%M') }}</td>
+            <td class="action">
+              <a href="#" class="view">查看</a>
+              <a href="/admin/post/edit/{{ post.key().id() }}" class="edit">修改</a>
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  post.key().id() }}';return false;" class="delete">删除</a>
+            </td>
+          </tr>
+          {%- endfor %}
         </tbody>
-    </table>
-    {% if prev %}
-    <a href="?bookmark={{ prev }}">上一页</a>
-    {% endif %}
-    {% if next %}
-    <a href="?bookmark={{ next }}">下一页</a>
-    {% endif %}
-     </div>
-     <div class="clear"></div>
+      </table>
+      {% if prev %}
+      <a href="?bookmark={{ prev }}">上一页</a>
+      {% endif %}
+      {% if next %}
+      <a href="?bookmark={{ next }}">下一页</a>
+      {% endif %}
+    </div>
+    <div class="clear"></div>
   </div>
 </div>
 {% endblock %}

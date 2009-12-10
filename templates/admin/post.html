@@ -6,7 +6,7 @@
 {% set post_active = 'active' %}
 {% endif %}
 
-{% block content %}
+{% block header %}
 <script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
@@ -40,40 +40,53 @@ tinyMCE.init({
   debug: false
 });
 </script>
+{% endblock %}
 
+{% block content %}
 <div id="containerHolder">
-   <div id="container">
-       <div id="sidebar">
-           <ul class="sideNav">
-               <li><a href="#">Exchange</a></li>
-               <li><a href="#" class="active">Print resources</a></li>
-               <li><a href="#">Training &amp; Support</a></li>
-               <li><a href="#">Books</a></li>
-               <li><a href="#">Safari books online</a></li>
-               <li><a href="#">Events</a></li>
-           </ul>
-       </div>
-       <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">{{ title }}</a></h2>
-       
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="#">Exchange</a></li>
+        <li><a href="#" class="active">Print resources</a></li>
+        <li><a href="#">Training &amp; Support</a></li>
+        <li><a href="#">Books</a></li>
+        <li><a href="#">Safari books online</a></li>
+        <li><a href="#">Events</a></li>
+      </ul>
+    </div>
+    <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">{{ title }}</a></h2>
+
     <div id="main">
-        <h3>{{ title }}：</h3>
-		<form action="" method="post">
-		<fieldset>
-		    <p><label class="caption">标题：</label><input id="id_title" type="text" class="title" value="{{ post.title }}" name="title" /></p>
-		    <p><label class="caption">内容：</label><textarea id="id_content" rows="10" cols="40" name="content">{{ post.content|e }}</textarea></p>
-		    <p><label class="caption">Tags：</label><input type="text" size="50" id="id_tags" class="text-long" value="{{ post.taglist|e }}" name="tags"/></p>
-		    <p><label class="caption">摘要：</label><textarea id="id_excerpt" style="width:650px;height:70px" rows="10" cols="40" name="excerpt">{{ post.excerpt }}</textarea></p>
-		    <p>
-		      <label class="caption">高级选项：</label>
-		      <label><input type="checkbox" name="allow_comment" id="id_allow_comment"{% if post.allow_comment != False %} checked="checked"{% endif %} /> 允许评论</label>
-		      <label><input type="checkbox" name="allow_ping" id="id_allow_ping"{% if post.allow_ping != False %} checked="checked"{% endif %} /> 允许引用</label>
-		      <label><input type="checkbox" name="hidden" id="id_hidden"{% if post.hidden == True %} checked="checked"{% endif %} /> 隐藏</label>
-		    </p>
-		    <input type="submit" value=" 发 布 " />
-		</fieldset>
-		</form>
-     </div>
-     <div class="clear"></div>
+      <h3>{{ title }}：</h3>
+      <form action="" method="post">
+        <fieldset>
+          <p><label class="caption">标题：</label><input id="id_title" type="text" class="title" value="{{ post.title }}" name="title" /></p>
+          <p>
+            <label>分类：</label>
+            <select name="category">
+              <option value=""></option>
+              {% for category in categories %}
+              <option value="{{ category.key() }}"{% if post.category and post.category.key() == category.key() %} selected="selected"{% endif %}>{{ category.name }}</option>
+              {% endfor %}
+            </select>
+            <label>发布时间：</label>
+            <input name="published" class="text-medium" value="{{ post.date|date("%Y-%m-%d %H:%M:%S") }}" />
+          </p>
+          <p><label class="caption">内容：</label><textarea id="id_content" rows="10" cols="40" name="content">{{ post.content|e }}</textarea></p>
+          <p><label class="caption">Tags：</label><input type="text" size="50" id="id_tags" class="text-long" value="{{ post.taglist|e }}" name="tags"/></p>
+          <p><label class="caption">摘要：</label><textarea id="id_excerpt" style="width:650px;height:70px" rows="10" cols="40" name="excerpt">{{ post.excerpt }}</textarea></p>
+          <p>
+            <label class="caption">高级选项：</label>
+            <label><input type="checkbox" name="allow_comment" id="id_allow_comment"{% if post.allow_comment != False %} checked="checked"{% endif %} /> 允许评论</label>
+            <label><input type="checkbox" name="allow_ping" id="id_allow_ping"{% if post.allow_ping != False %} checked="checked"{% endif %} /> 允许引用</label>
+            <label><input type="checkbox" name="hidden" id="id_hidden"{% if post.hidden == True %} checked="checked"{% endif %} /> 隐藏</label>
+          </p>
+          <input type="submit" value=" 发 布 " />
+        </fieldset>
+      </form>
+    </div>
+    <div class="clear"></div>
   </div>
 </div>
 {% endblock %}

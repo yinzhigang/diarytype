@@ -29,7 +29,7 @@ class setting(object):
         blog.name = inp.name
         blog.description = inp.description
         blog.custom_header = inp.custom_header
-        blog.save()
+        blog.update()
         
         raise web.seeother('/admin/setting')
 

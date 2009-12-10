@@ -1,0 +1,80 @@
+{% extends "admin/layout.html" %}
+{% block title %} 分类管理 {% endblock %}
+{% set category_active = 'active' %}
+
+{% block header %}
+<script type="text/javascript" src="/static/js/jquery-ui-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/json.js"></script>
+<script type="text/javascript" charset="utf-8">
+var fixHelper = function(e, ui) {
+  ui.children().each(function() {
+    $(this).width($(this).width());
+  });
+  return ui;
+}
+$(document).ready(function() {
+  $("table.list tbody").sortable({
+    helper: fixHelper,
+    update: function (event, ui) {
+      items = {};
+      $(this).find('tr').each(function(i, val) {
+        id = this.id;
+        sort = i + 1;
+        items[id] = sort;
+        $(this).find('td.sort_num').html(sort);
+      });
+      // console.log(items);
+      $.post('/admin/categories', JSON.stringify(items), function(data) {
+        // console.log(data);
+      }, 'json');
+      $(this).find('tr').removeClass();
+      $(this).find('tr:even').addClass('odd');
+    }
+  }).disableSelection();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/category/new">新增分类</a></li>
+        <li><a href="/admin/categories" class="active">分类列表</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/categoriess" class="active">分类管理</a></h2>
+
+    <div id="main">
+      <h3>分类管理</h3>
+
+      <table cellpadding="0" cellspacing="0" id="category_list" class="list">
+        <thead>
+          <tr>
+            <th>ID</th><th>排序</th><th width="50%">名称</th><th>文章数</th><th width="70">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for category in categories -%}
+          <tr id="{{ category.key().id() }}" class="{{ loop.cycle('odd', '') }}">
+            <td>{{ category.key().id() }}</td>
+            <td class="sort_num">{{ category.sort }}</td>
+            <td>{{ category.name|e }}</td>
+            <td>{{ category.count }}
+            <td class="action">
+              <a href="/admin/category/edit/{{ category.key().id() }}" class="edit">修改</a>
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/category/delete/{{  category.key().id() }}';return false;" class="delete">删除</a>
+            </td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+      <div>拖拽表格排序</div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}
