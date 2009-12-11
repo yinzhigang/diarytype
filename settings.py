@@ -13,6 +13,9 @@ urls = (
     '/admin/categories', 'category.admin.categories',
     '/admin/category/new', 'category.admin.edit',
     '/admin/category/edit/(\d+)', 'category.admin.edit',
+    '/admin/category/delete/(\d+)', 'category.admin.delete',
+    
+    '/admin/comments', 'comment.admin.comments',
     
     '/admin/setting', 'blog.admin.setting',
     '/admin/import', 'blog.admin.import_wordpress',

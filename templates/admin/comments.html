@@ -1,0 +1,50 @@
+{% extends "admin/layout.html" %}
+{% block title %} 评论管理 {% endblock %}
+{% set comments_active = 'active' %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/comments" class="active">所有评论</a></li>
+        <li><a href="#">隐藏评论</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/comments" class="active">评论管理</a></h2>
+
+    <div id="main">
+      <h3>评论管理</h3>
+
+      <table cellpadding="0" cellspacing="0" class="list">
+        <thead>
+          <tr>
+            <th>ID</th><th width="50%">姓名</th><th>内容</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for comment in comments -%}
+          <tr class="{{ loop.cycle('odd', '') }}">
+            <td>{{ comment.key().id() }}</td>
+            <td>{{ comment.username|e }}</td>
+            <td>{{ comment.comment|e }}</td>
+            <td class="action">
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  post.key().id() }}';return false;" class="delete">删除</a>
+            </td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+      {% if prev %}
+      <a href="?bookmark={{ prev }}">上一页</a>
+      {% endif %}
+      {% if next %}
+      <a href="?bookmark={{ next }}">下一页</a>
+      {% endif %}
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

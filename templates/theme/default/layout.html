@@ -2,51 +2,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{{ blog.name|e }}</title>
+<title>{% block title %}{% endblock %} {{ blog.name|e }}</title>
 <link href="/theme/default/style.css" rel="stylesheet" type="text/css" media="screen" />
 {{ blog.custom_header }}
 </head>
 
 <body>
-  <div id="{% block page_div_id %}index{% endblock %}">
-    <div id="container">
-      <div id="header">
-        <h1 class="blogName"><a href="/">{{ blog.name|e }}</a></h1>
-        <div class="description">{{ blog.description|e }}</div>
-        <div class="clear"></div>
-        <div id="cats" class="module">
-          <div class="modTop"></div>
-          <h2>文章分类</h2>
-          <div class="modBody">
-            <ul>
-              <li><a href="#">un-categoried<span class='count'>[15]</span></a></li>
-              <li><a href="#">梦魇<span class='count'>[3]</span></a></li>
-              <li><a href="#">I...exist<span class='count'>[4]</span></a></li>
-              <li><a href="#">分裂病<span class='count'>[2]</span></a></li>
-              <li><a href="#">pussin' by<span class='count'>[15]</span></a></li>
-              <li><a href="#">iSCREAM<span class='count'>[16]</span></a></li>
-              <li><a href="#">en-public<span class='count'>[19]</span></a></li>
+<div id="{% block page_div_id %}index{% endblock %}">
+  <div id="container">
+    <div id="header">
+      <h1 class="blogName"><a href="/">{{ blog.name|e }}</a></h1>
+      <div class="description">{{ blog.description|e }}</div>
+      <div class="clear"></div>
+      <div id="cats" class="module">
+        <div class="modTop"></div>
+        <h2>文章分类</h2>
+        <div class="modBody">
+          <ul>
+            <li><a href="#">un-categoried<span class='count'>[15]</span></a></li>
+            <li><a href="#">梦魇<span class='count'>[3]</span></a></li>
+            <li><a href="#">I...exist<span class='count'>[4]</span></a></li>
+            <li><a href="#">分裂病<span class='count'>[2]</span></a></li>
+            <li><a href="#">pussin' by<span class='count'>[15]</span></a></li>
+            <li><a href="#">iSCREAM<span class='count'>[16]</span></a></li>
+            <li><a href="#">en-public<span class='count'>[19]</span></a></li>
 
-              <li><a href="#">fack ya'll<span class='count'>[12]</span></a></li>
-              <li><a href="#">Vector Lover<span class='count'>[3]</span></a></li>
-              <li><a href="#">Fictor<span class='count'>[1]</span></a></li>
-              <li><a href="#">精神分裂<span class='count'>[1]</span></a></li>
-              <li><a href="#">GamingLife<span class='count'>[1]</span></a></li>
-              <li><a href="#">Bless<span class='count'>[1]</span></a></li>
+            <li><a href="#">fack ya'll<span class='count'>[12]</span></a></li>
+            <li><a href="#">Vector Lover<span class='count'>[3]</span></a></li>
+            <li><a href="#">Fictor<span class='count'>[1]</span></a></li>
+            <li><a href="#">精神分裂<span class='count'>[1]</span></a></li>
+            <li><a href="#">GamingLife<span class='count'>[1]</span></a></li>
+            <li><a href="#">Bless<span class='count'>[1]</span></a></li>
 
-            </ul>
-          </div>
-          <div class="modBottom"></div>
+          </ul>
         </div>
+        <div class="modBottom"></div>
       </div>
-      {% block content %}{% endblock %}
-      <div id="footer">
+    </div>
 
-        <div class="copyright">
-          版权所有 <a href="http://insane.blogbus.com/">精神分裂病人的病历</a> – 2007 Ver.2<br />本日志遵循创作共用约定：<a href="http://www.creativecommons.cn/licenses/by-nc-sa/1.0" target="_blank">署名 · 非商业用途 · 保持一致 1.0</a>
-        </div>
+    {% block content %}{% endblock %}
+
+    <div id="footer">
+      <div class="copyright">
+        版权所有 <a href="http://insane.blogbus.com/">精神分裂病人的病历</a> – 2007 Ver.2<br />本日志遵循创作共用约定：<a href="http://www.creativecommons.cn/licenses/by-nc-sa/1.0" target="_blank">署名 · 非商业用途 · 保持一致 1.0</a>
       </div>
     </div>
   </div>
+</div>
 </body>
 </html>

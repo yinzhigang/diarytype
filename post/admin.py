@@ -57,9 +57,27 @@ class edit(object):
         post.allow_ping = bool(inp.get('allow_ping'))
         post.hidden = bool(inp.get('hidden'))
         
+        # 以下分类代码写的比较乱
+        # 文章添加分类最简单，直接分类统计加1
+        # 分类修改则取得原分类减1，新分类加1
+        # 删除分类则将旧分类减1
         category_key = inp.get('category')
         if category_key:
-            post.category = Category.get(category_key)
+            category = Category.get(category_key)
+        if post.category:
+            if post.category.key() != category_key:
+                post.category.count = post.category.count - 1
+                post.category.save()
+                if category_key:
+                    post.category = category
+                    category.count = category.count + 1
+                    category.save()
+                else:
+                    post.category = None
+        elif category_key:
+            post.category = category
+            category.count = category.count + 1
+            category.save()
         
         tags = inp.tags
         if tags:

@@ -21,3 +21,5 @@ class Processor(object):
         blog = Blog.get()
         return getattr(blog, name)
     
+    def sidebar(self, name='default'):
+        pass

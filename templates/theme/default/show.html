@@ -1,4 +1,5 @@
 {% extends "theme/layout.html" %}
+{% block title %}{{ post.title }}{% endblock %}
 {% block page_div_id %}detail{% endblock %}
 
 {% block content %}
@@ -11,7 +12,11 @@
         <div class="postsTop"></div>
         <li class="list">
           <div class="postHeader">
-            <h2>{{ post.title|e }}<!-- <span class='category'> - [<a href='/c1699300/'>en-public</a>]</span> --></h2>
+            <h2>{{ post.title|e }}
+              {% if post.category %}
+              <span class='category'> - [<a href='#'>{{ post.category.name|e }}</a>]</span>
+              {% endif %}
+            </h2>
             <h3>{{ post.date|date("%Y-%m-%d") }}</h3>
           </div>
           <div class="postBody">
@@ -50,18 +55,19 @@ target="_blank">本声明</a><br />
           <div class='menubar'><span class='author'>eva | </span> 发表于<span class='time'>2009-11-29 18:45:47</span> <span>[<a href="#" onclick="#" rel="facebox">回复</a>]</span></div>
         </li>
       </ul>
+      {% if post.allow_comment %}
       <div id="commentForm">
         <h2>发表评论</h2>
         <a name="cmt_form"></a>
         <form method="post" action="#" onsubmit="return check_cmt(this);">
           <div>
             <label for="cname">姓　名</label>
-            <input class="textField" id="cname" name="name" type="text" />
+            <input class="textField" id="cname" name="username" type="text" />
           </div>
           <div>
             <label for="cemail">E-Mail</label>
             <input class="textField" id="cemail" name="email" type="text" />
-            <span style="color:#ccc; margin-left:5px;" class="emailnotice"><span>您将收到博主的回复邮件</span></span> </div>
+          </div>
           <div>
             <label for="chomepage">地　址</label>
             <input class="textField" id="chomepage" name="homepage" type="text" />
@@ -70,15 +76,16 @@ target="_blank">本声明</a><br />
             <textarea name="content" rows="8"></textarea>
           </div>
           <div class="submit">
-            <input type="hidden" name="postId" value="32013005" />
-            <input type="hidden" name="blogId" value="4756607" />
+            <input type="hidden" name="postId" value="{{ post.key() }}" />
             <input type="hidden" name="checksum" value="763e0fe4042ac1d2825a96e1f2323277" />
             <input class="button" name="addsub" value="提交" type="submit" />
-            <span class="rememberBox">
+            <!-- <span class="rememberBox">
             <input id="cremember" name="remember" Checked="true" type="checkbox" class="cremember" style="margin:0; padding:0; border:0; width:auto;" />
-            记住我</span> </div>
+            记住我</span> -->
+          </div>
         </form>
       </div>
+      {% endif %}
       <div class="contentBottom"></div>
     </div>
   </div>

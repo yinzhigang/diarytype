@@ -59,3 +59,12 @@ class edit(object):
         category.save()
         
         return web.seeother('/admin/categories')
+
+class delete(object):
+    """删除分类"""
+    def GET(self, category_id=None):
+        if category_id:
+            category = Category.get_by_id(int(category_id))
+            category.delete()
+        
+        return web.seeother('/admin/categories')
