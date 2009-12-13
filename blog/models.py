@@ -11,6 +11,7 @@ class Blog(db.Model):
     owner = db.StringProperty(multiline=False,default='admin')
     theme = db.StringProperty(multiline=False,default='default')
     custom_header = db.TextProperty(default='')
+    theme_wedgit = db.TextProperty(default='')
     
     @classmethod
     def get(cls):

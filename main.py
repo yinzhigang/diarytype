@@ -27,5 +27,9 @@ class hello:
             name = 'world'
         return 'hello ' + name
 
-if __name__ == "__main__":
+def main():
+    """系统主程序，必须使用此名称，以便GAE缓存"""
     app.cgirun()
+
+if __name__ == "__main__":
+    main()

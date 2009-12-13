@@ -31,9 +31,9 @@ loader = PrefixLoader({
     'theme': FunctionLoader(load_theme),
     'admin': FileSystemLoader(ADMIN_TEMPLATE_DIR),
 })
-bcc = MemcachedBytecodeCache(memcache)
+# bcc = MemcachedBytecodeCache(memcache)
 
-env = Environment(loader=loader,bytecode_cache=bcc,auto_reload=DEBUG)
+env = Environment(loader=loader,auto_reload=DEBUG)
 env.filters['date'] = filters.datetimeformat
 
 def render(template, **kwargs):

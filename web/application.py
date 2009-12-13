@@ -4,7 +4,7 @@ Web application
 (from web.py)
 """
 import webapi as web
-import webapi, wsgi, utils
+import webapi, utils
 from utils import lstrips, safeunicode
 import sys
 

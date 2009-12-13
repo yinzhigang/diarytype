@@ -11,19 +11,11 @@ __author__ = [
 __license__ = "public domain"
 __contributors__ = "see http://webpy.org/changes"
 
-import utils, net, wsgi, http, webapi, httpserver
+import utils, net, http, webapi
 
 from utils import *
 from net import *
-from wsgi import *
 from http import *
 from webapi import *
-from httpserver import *
 from application import *
-from browser import *
-import test
-try:
-    import webopenid as openid
-except ImportError:
-    pass # requires openid module
 
