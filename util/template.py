@@ -2,7 +2,10 @@
 
 import os
 
+from google.appengine.api import memcache
+
 from jinja2 import Environment,PrefixLoader,FileSystemLoader,FunctionLoader
+from jinja2 import MemcachedBytecodeCache
 from settings import DEBUG,ADMIN_TEMPLATE_DIR,THEME_TEMPLATE_DIR
 from util import filters
 
@@ -28,7 +31,9 @@ loader = PrefixLoader({
     'theme': FunctionLoader(load_theme),
     'admin': FileSystemLoader(ADMIN_TEMPLATE_DIR),
 })
-env = Environment(loader=loader,auto_reload=DEBUG)
+bcc = MemcachedBytecodeCache(memcache)
+
+env = Environment(loader=loader,bytecode_cache=bcc,auto_reload=DEBUG)
 env.filters['date'] = filters.datetimeformat
 
 def render(template, **kwargs):

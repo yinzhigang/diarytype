@@ -261,6 +261,7 @@ h3 {
 	margin: 0 10px 0 0;
 }
 
+#main fieldset .title:focus,
 #main fieldset .text-long:focus, 
 #main fieldset .text-medium:focus,
 #main fieldset .text-small:focus,
