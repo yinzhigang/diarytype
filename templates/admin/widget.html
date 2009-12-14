@@ -1,0 +1,62 @@
+{% extends "admin/layout.html" %}
+{% block title %} 布局管理 {% endblock %}
+{% set theme_active = 'active' %}
+
+{% block header %}
+<script type="text/javascript" src="/static/js/jquery-ui-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/json.js"></script>
+<style type="text/css">
+#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; background:#E6E6E6; border:1px solid #D3D3D3; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 10px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+</style>
+<script type="text/javascript">
+$(function() {
+	$("#sortable1, #sortable2").sortable({
+		connectWith: '.connectedSortable'
+	}).disableSelection();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/theme">模板管理</a></li>
+        <li><a href="/admin/theme/widget" class="active">模板布局</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/theme/widget" class="active">模板布局</a></h2>
+
+    <div id="main">
+      <h3>模板布局</h3>
+
+      <div>
+
+        <ul id="sortable1" class="connectedSortable">
+        	<li class="ui-state-default">Item 1</li>
+        	<li class="ui-state-default">Item 2</li>
+        	<li class="ui-state-default">Item 3</li>
+        	<li class="ui-state-default">Item 4</li>
+        	<li class="ui-state-default">Item 5</li>
+        </ul>
+
+        <ul id="sortable2" class="connectedSortable">
+        	<li class="ui-state-highlight">Item 1</li>
+        	<li class="ui-state-highlight">Item 2</li>
+        	<li class="ui-state-highlight">Item 3</li>
+        	<li class="ui-state-highlight">Item 4</li>
+        	<li class="ui-state-highlight">Item 5</li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}
