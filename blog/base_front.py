@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from util.template import env
+import simplejson as json
 
 from blog.models import Blog
 
@@ -21,5 +22,10 @@ class Processor(object):
         blog = Blog.get()
         return getattr(blog, name)
     
-    def sidebar(self, name='default'):
-        pass
+    def sidebar(self, number='1'):
+        """侧边条应用"""
+        blog = Blog.get()
+        if blog.theme_widget:
+            theme_widget = json.loads(blog.theme_widget)
+        
+        return 'test1' + number

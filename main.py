@@ -15,9 +15,9 @@
 # GNU General Public License for more details.
 ###############################################################################
 import web
+from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
-from util.template import render
 
 app = web.application(settings.urls, globals())
 
@@ -28,8 +28,8 @@ class hello:
         return 'hello ' + name
 
 def main():
-    """系统主程序，必须使用此名称，以便GAE缓存"""
-    app.cgirun()
+    wsgiapp = app.wsgifunc()
+    run_wsgi_app(wsgiapp)
 
 if __name__ == "__main__":
     main()

@@ -65,7 +65,7 @@ class edit(object):
         if category_key:
             category = Category.get(category_key)
         if post.category:
-            if post.category.key() != category_key:
+            if unicode(post.category.key()) != unicode(category_key):
                 post.category.count = post.category.count - 1
                 post.category.save()
                 if category_key:

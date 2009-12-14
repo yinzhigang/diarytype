@@ -11,7 +11,7 @@ class Blog(db.Model):
     owner = db.StringProperty(multiline=False,default='admin')
     theme = db.StringProperty(multiline=False,default='default')
     custom_header = db.TextProperty(default='')
-    theme_wedgit = db.TextProperty(default='')
+    theme_widget = db.TextProperty(default='')
     
     @classmethod
     def get(cls):
@@ -29,3 +29,8 @@ class Blog(db.Model):
         """更新博客信息并清除缓存"""
         cache['blog'] = self
         self.save()
+
+class Widget(db.Model):
+    """侧边条工具"""
+    name = db.StringProperty(multiline=False)
+    package = db.StringProperty()

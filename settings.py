@@ -17,6 +17,9 @@ urls = (
     
     '/admin/comments', 'comment.admin.comments',
     
+    '/admin/theme', 'theme.admin.theme',
+    '/admin/theme/widget', 'theme.admin.widget',
+    
     '/admin/setting', 'blog.admin.setting',
     '/admin/import', 'blog.admin.import_wordpress',
     

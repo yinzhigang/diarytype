@@ -2,10 +2,10 @@
 
 import os
 
-from google.appengine.api import memcache
+# from google.appengine.api import memcache
 
 from jinja2 import Environment,PrefixLoader,FileSystemLoader,FunctionLoader
-from jinja2 import MemcachedBytecodeCache
+# from jinja2 import MemcachedBytecodeCache
 from settings import DEBUG,ADMIN_TEMPLATE_DIR,THEME_TEMPLATE_DIR
 from util import filters
 
