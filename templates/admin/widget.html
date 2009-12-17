@@ -3,19 +3,41 @@
 {% set theme_active = 'active' %}
 
 {% block header %}
+<link href="/static/admin/css/theme.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="/static/js/jquery-ui-1.7.2.min.js"></script>
 <script type="text/javascript" src="/static/js/json.js"></script>
 <style type="text/css">
 #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
 #sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; background:#E6E6E6; border:1px solid #D3D3D3; }
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 10px !important; }
-.ui-sortable-placeholder * { visibility: hidden; }
+/*.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 10px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }*/
 </style>
 <script type="text/javascript">
 $(function() {
-	$("#sortable1, #sortable2").sortable({
-		connectWith: '.connectedSortable'
-	}).disableSelection();
+	$('.column').sortable({
+		items: '> div.side',
+		cursor: 'move',
+		appendTo: 'body',
+		connectWith: ['.column'],
+    start: function(e,ui) {
+      ui.helper.css("width", ui.item.width());
+      ui.helper.addClass('itemactive');
+    },
+    update: function(e,ui) {
+      // console.log(ui);
+    },
+    stop: function(e,ui) {
+      ui.item.removeClass('itemactive');
+    }
+  });
+  $('td#posCenter div.main > div.side').draggable({
+    connectToSortable: '.column',
+    helper: 'clone',
+    revert: 'invalid',
+    // start: function(e,ui) {
+    //       ui.helper.css("width", ui.item.width());
+    //     }
+  });
 });
 </script>
 {% endblock %}
@@ -35,25 +57,80 @@ $(function() {
 
     <div id="main">
       <h3>模板布局</h3>
-
-      <div>
-
-        <ul id="sortable1" class="connectedSortable">
-        	<li class="ui-state-default">Item 1</li>
-        	<li class="ui-state-default">Item 2</li>
-        	<li class="ui-state-default">Item 3</li>
-        	<li class="ui-state-default">Item 4</li>
-        	<li class="ui-state-default">Item 5</li>
-        </ul>
-
-        <ul id="sortable2" class="connectedSortable">
-        	<li class="ui-state-highlight">Item 1</li>
-        	<li class="ui-state-highlight">Item 2</li>
-        	<li class="ui-state-highlight">Item 3</li>
-        	<li class="ui-state-highlight">Item 4</li>
-        	<li class="ui-state-highlight">Item 5</li>
-        </ul>
-
+      
+      <div id="theme">
+        <div id="themeLayout">
+          
+          <table border="0" cellspacing="0" cellpadding="0" id="layoutContainer">
+            <tr>
+              <td id="posTopLeft2"></td>
+              <td id="posTopLeft1"></td>
+              <td id="posTop" class="col_center"></td>
+              <td id="posTopRight1"></td>
+              <td id="posTopRight2"></td>
+            </tr>
+            <tr>
+              <td id="posLeft2"></td>
+              <td id="posLeft1"></td>
+              <td id="posCenter" class="col_center">
+                <div class="main">
+                  <h3>可选插件</h3>
+                  <div id="profile" class="side">
+                    <h4><span class="title">个人信息</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
+                  </div>
+                  <div id="posts" class="side">
+                    <h4><span class="title">最新文章</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
+                  </div>
+                </div>
+              </td>
+              <td id="posRight1">
+                <div id="layout_column1" class="column" style="position: relative; width: 230px;">
+                  <h3>副栏 1 <!-- <a class="mod_add" title="添加模块" href="#">[添加模块]</a> --></h3>
+                  <div id="profile" class="side">
+                    <h4><span class="title">个人信息</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="posts" class="side">
+                    <h4><span class="title">最新文章</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="comments" class="side">
+                    <h4><span class="title">最新评论</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="tag" class="side">
+                    <h4><span class="title">Tags</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="sort" class="side">
+                    <h4><span class="title">文章分类</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                </div>
+                
+                <div id="layout_column1" class="column" style="position: relative; width: 230px;">
+                  <h3>副栏 2 <!-- <a class="mod_add" title="添加模块" href="#">[添加模块]</a> --></h3>
+                  <div id="link" class="side">
+                    <h4><span class="title">友情链接</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="login" class="side">
+                    <h4><span class="title">管理</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="html1" class="side">
+                    <h4><span class="title">自定义HTML 1</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                  <div id="html2" class="side">
+                    <h4><span class="title">自定义HTML 2</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                  </div>
+                </div>
+              </td>
+              <td id="posRight2"></td>
+            </tr>
+            <tr>
+              <td id="posBottomLeft2"></td>
+              <td id="posBottomLeft1"></td>
+              <td id="posBottom" class="col_center"></td>
+              <td id="posBottomRight1"></td>
+              <td id="posBottomRight2"></td>
+            </tr>
+          </table>
+          
+        </div>
       </div>
     </div>
     <div class="clear"></div>
