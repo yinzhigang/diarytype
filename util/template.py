@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import base64, logging
+import logging
 
 from google.appengine.api import memcache
 
@@ -12,42 +12,26 @@ from util import filters
 
 from blog.models import Blog
 
-try:
-    mydata
-except NameError:
-    logging.error("damn")
-    mydata = {}
-
-def get_data_by_name(name):
-    if base64.b64encode(name) in mydata:
-        return mydata[base64.b64encode(name)]
-    return None
-
 class PerformancePrefixLoader(PrefixLoader):
     """加强缓存，模板加载系统"""
     def load(self, environment, name, globals=None):
         """Loads a Python code template"""
         if globals is None:
             globals = {}
-        #try for a variable cache
-        code = get_data_by_name(name)
-        if code is not None:
-            logging.info("ultrafast memcache")
+        code = memcache.get('tempelate_' + name)
+        if code is None:
+            logging.info("oops no memcache!!")
+            source, filename, uptodate = self.get_source(environment, name)
+            # template = file(filename).read().decode('ascii').decode('utf-8')
+            code = environment.compile(source, raw=True)
+            memcache.set('tempelate_' + name, code)
+            logging.info(name)
         else:
-            logging.info("slow memcache")
-            code = memcache.get(name)
-            if code is None:
-                logging.info("oops no memcache!!")
-                source, filename, uptodate = self.get_source(environment, name)
-                # template = file(filename).read().decode('ascii').decode('utf-8')
-                code = environment.compile(source, raw=True)
-                memcache.set(name,code)
-                logging.info(name)
-            else:
-                logging.info("yeh memcache")
-            code = compile(code, name, 'exec')
-            mydata[base64.b64encode(name)] = code
-        return environment.template_class.from_code(environment, code,globals)
+            logging.info("yeh memcache")
+            uptodate = lambda: False
+        code = compile(code, name, 'exec')
+        return environment.template_class.from_code(environment, code,
+                                                    globals, uptodate)
     
 def load_theme(name):
     """加载自定义模板,优先扫描数据库数据,而后扫描本地文件"""

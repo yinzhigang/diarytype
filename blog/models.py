@@ -34,3 +34,12 @@ class Widget(db.Model):
     """侧边条工具"""
     name = db.StringProperty(multiline=False)
     package = db.StringProperty()
+    
+    def item(self, params=None):
+        """获取装饰控制对象"""
+        x = self.package.split('.')
+        mod, cls = '.'.join(x[:-1]), x[-1]
+        mod = __import__(mod, globals(), locals(), [""])
+        cls = getattr(mod, cls)
+        item = cls(params)
+        return item

@@ -15,7 +15,8 @@
 # GNU General Public License for more details.
 ###############################################################################
 import web
-from google.appengine.ext.webapp.util import run_wsgi_app
+import wsgiref
+# from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
 
@@ -29,7 +30,8 @@ class hello:
 
 def main():
     wsgiapp = app.wsgifunc()
-    run_wsgi_app(wsgiapp)
+    wsgiref.handlers.CGIHandler().run(wsgiapp)
+    # run_wsgi_app(wsgiapp)
 
 if __name__ == "__main__":
     main()

@@ -3,6 +3,8 @@ version: 5
 runtime: python
 api_version: 1
 
+default_expiration: "30d"
+
 handlers:
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py

@@ -48,7 +48,7 @@ $(function() {
     <div id="sidebar">
       <ul class="sideNav">
         <li><a href="/admin/theme">模板管理</a></li>
-        <li><a href="/admin/theme/widget" class="active">模板布局</a></li>
+        <li><a href="/admin/theme/widget" class="active">模板装饰</a></li>
       </ul>
     </div>
 
@@ -75,12 +75,11 @@ $(function() {
               <td id="posCenter" class="col_center">
                 <div class="main">
                   <h3>可选插件</h3>
-                  <div id="profile" class="side">
-                    <h4><span class="title">个人信息</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
+                  {% for widget in widgets %}
+                  <div id="{{ widget.name }}" class="side">
+                    <h4><span class="title">{{ widget.item().name() }}</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
                   </div>
-                  <div id="posts" class="side">
-                    <h4><span class="title">最新文章</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
-                  </div>
+                  {% endfor %}
                 </div>
               </td>
               <td id="posRight1">
