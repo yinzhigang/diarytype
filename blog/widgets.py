@@ -13,7 +13,9 @@ class Widget(object):
         self.params = params
     
     def name(self):
-        pass
+        return ''
+
+default_widgets = ['categories', 'recent_entries', 'custom_html']
 
 class categories(Widget):
     """文章分类装饰"""
@@ -51,7 +53,7 @@ class recent_entries(Widget):
         
         return ''.join(content)
 
-class custom_html(object):
+class custom_html(Widget):
     """自定义HTML装饰"""
     def name(self):
         return u"自定义HTML"

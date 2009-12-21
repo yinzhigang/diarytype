@@ -19,6 +19,7 @@ urls = (
     
     '/admin/theme', 'theme.admin.theme',
     '/admin/theme/widget', 'theme.admin.widget',
+    '/admin/theme/widget/init', 'theme.admin.init_widget',
     
     '/admin/setting', 'blog.admin.setting',
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',

@@ -2,6 +2,7 @@
 
 import web
 
+import blog.widgets
 from blog.models import Blog, Widget
 
 from util.template import render
@@ -15,6 +16,23 @@ class theme(object):
     @requires_admin
     def GET(self):
         pass
+
+class init_widget(object):
+    """初始化默认装饰"""
+    @requires_admin
+    def GET(self):
+        widgets = Widget.all()
+        for widget in widgets:
+            widget.delete()
+        
+        widget_modules = blog.widgets.default_widgets
+        for widget_name in widget_modules:
+            widget = Widget(key_name=widget_name)
+            widget.name = widget_name
+            widget.package = 'blog.widgets.%s' % widget_name
+            widget.save()
+        
+        raise web.seeother('/admin/theme/widget')
 
 class widget(object):
     """侧边条小工具"""
@@ -33,7 +51,6 @@ class widget(object):
                       widgets=widgets,
                       sidebar_num=sidebar_num,
                       processor=processor
-                      # theme_widget=theme_widget
                      )
     
     @requires_admin
