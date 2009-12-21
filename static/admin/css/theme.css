@@ -1,0 +1,169 @@
+@charset "utf-8";
+/* CSS Document */
+
+div.column { width:180px; margin:5px 5px; background:#f5f5f5; padding:5px; border:1px solid #ddd; height:auto; min-height:40px; _height:40px;}
+div.main { width:325px; margin:5px 5px; float:left; display:inline; background:#f5f5f5; padding:5px; border:1px solid #ddd; height:400px; }
+.col_center div.column { width:325px; }
+
+#theme #themeLayout  { margin-bottom:10px; }
+#theme #themeLayout h3.title { margin-bottom:20px; }
+#theme #themeLayout table td { padding-bottom:10px; }
+#theme #themeLayout table h3 { border:1px dashed #ff9933; height:14px; line-height:14px; margin:3px 1px 5px 0; color:#888; background:#fff; position:static; }
+#theme #themeLayout h3 a { font-weight:normal; color:#999; position:absolute; right:10px; }
+#theme #themeLayout h3 span.tip { position:absolute; left:20px; top:-10px; color:#444; background-color:#ffa; padding:4px 6px; display:none; opacity:0.7; filter:alpha(opacity=70);}
+#theme #themeLayout h3 a:hover { color:#6bb044; }
+#layoutContainer td { vertical-align:top;}
+.side h4 { position:relative; margin:5px 5px; font-weight:normal; }
+.side h4 span.title { display:block; width: 120px; height:14px; overflow: hidden; }
+.side h4 .editMod { position: absolute; top:0; right:0; }
+.side h4 .editMod a { font-weight:normal; color:#999; }
+.side h4 .editMod a:hover { color:#6bb044; }
+.side { background-color: #F4F9FB; border-style:solid; border-width:1px 2px 2px 1px; border-color:#ddd #bbb #bbb #ddd; height:30px; padding-top:4px; *height:22px; *padding-top:10px; line-height:normal; margin:3px 0; text-align:left; cursor:pointer; }
+.mainBody { margin:10px 0 0; text-align:center;}
+.hover { background:#FFC; }
+.itemactive { background:#F93; opacity:0.5; filter:alpha(opacity=50); }
+a.mod_del { font-size:10px; _margin-right:5px; font-family:Arial; }
+a.mod_del:hover { text-decoration:none; }
+
+#theme h3 { border-bottom:1px solid #F0F0F0; color:#6BB044; font-size:12px; font-weight:bold; padding:6px 0 6px 5px; z-index:5; position:relative; }
+#theme h3 span { font-weight:normal; color:#999; font-size:12px; }
+#theme h3 span a  { color:#999; }
+#theme h3 span.subCurrent {
+color:#999999;
+display:block;
+font-size:12px;
+font-weight:normal;
+height:20px;
+position:absolute;
+right:10px;
+top:10px;
+}
+
+#currentTheme { margin-bottom:30px; padding-top:10px; padding-bottom:15px; border-bottom:1px solid #f0f0f0; }
+#currentTheme .thumbs { float:left; }
+#currentTheme .thumbs img { width:150px; margin-left:5px; }
+#currentTheme .themeInfo { float:left; margin:0; padding-left:15px; }
+#currentTheme .themeInfo p { color:#666; padding:0; margin:0 0 8px; }
+#currentTheme .themeInfo .themeType { color:#999; }
+#currentTheme .themeInfo .themeType a { color:#999; }
+#currentTheme .themeInfo .themeSetting { margin-top:35px; }
+#currentTheme .themeAction { float:right; }
+#currentTheme .themeAction ul { padding-right:10px; }
+#currentTheme .themeAction ul li { margin-bottom:10px; }
+#currentTheme .themeAction ul li.old { margin-top:25px; margin-bottom:0; }
+#currentTheme .themeAction ul li.old a { color:#999; }
+
+.themePickerTab { position: relative; height:24px;  border-bottom:1px solid #ddd; }
+.themePickerTab ul { position:absolute; left:10px;  }
+.themePickerTab li { float:left; display:block; height:15px; padding:7px 0 3px; text-align:center; width:120px; background: url(../bg_channelTab_long.gif) no-repeat scroll right top;
+ }
+.themePickerTab li a { color:#666; }
+.themePickerTab li a:hover { color:#6bb044; } 
+.themePickerTab span { position:absolute; right:10px; top:5px; }
+.themePickerTab span a { color:#999; }
+.themePickerTab span a:hover { color:#6bb044; }
+
+.themePickerTab li#first { width:1px; background:url(../bg_channelTabLine.gif) no-repeat right 0; }
+.themePickerTab li#hover { background:transparent url(../bg_channelTabHover_long.gif) no-repeat scroll left top;border-bottom:1px solid #FFFFFF; font-weight:bold; }
+.themePickerTab li#hover a { color:#6bb044; }
+.themePickerTab .theme_topline { clear:both; font-size:0; line-height:0; height:0;  }
+
+.themePickerSearch { margin:20px 0; }
+.themePickerSearch p { margin:3px 10px 8px; }
+.themePickerList { margin-top:17px; }
+.themePickerList01 { overflow:hidden; zoom:1; margin-top:20px; }
+.themePickerList01 li { float:left; width:250px; height:210px; text-align:center; }
+
+.themePickerList01 li .thumbs .pic { position:relative; }
+.themePickerList01 li .thumbs .pic .themeTag { width:196px; position:absolute; bottom:0; left:25px; background: #DEFEE3; opacity:0.7;filter:alpha(opacity=70); padding:4px 2px; line-height:140%; color:#666; display:none; _bottom:60px; _left:0; }
+.themePickerList01 li .thumbs .pic img{ width:200px; height:150px; }
+.themePickerList01 li .themeAction { margin:5px 0; }
+.themePickerList01 li .themeAction h5 { color:#999; }
+.themePickerList01 li .themeAction p { color:#999; margin-top:5px; }
+
+.themePickerList02 { margin-top:20px; margin-left:10px; }
+.themePickerList02 li { zoom:1; overflow:hidden; background:url(../dottedline2.gif) repeat-x bottom; padding-bottom:10px; margin-bottom:20px; }
+.themePickerList02 li .thumbs { float:left; text-align:center; }
+.themePickerList02 li .thumbs .pic img { width:150px; }
+.themePickerList02 li .thumbs .themeAction { margin:5px 0; color:#999; }
+.themePickerList02 li .desc { float:left; width:570px; margin-left:15px; display:inline; }
+.themePickerList02 li .desc div { margin-bottom:5px; line-height:140%; }
+.themePickerList02 li .desc strong { float:left; width:70px; }
+.themePickerList02 li .desc .name span { font-weight:bold; color:#6bb044; }
+.themePickerList02 li .desc .intro  { margin-bottom:5px; }
+.themePickerList02 li .desc .intro .introtext { float:left; line-height:140%; width:510px; }
+
+.themePickerList02 li .desc .rank strong { padding-top:2px; }
+.themePickerList02 li .desc .rank .rateNumber { float:right; }
+.themePickerList02 li .desc .rank .rateNumber b { font-size:16px; font-family:Verdana, Arial, Helvetica, sans-serif; }
+
+.themePickerList02 li .desc .rank .rankStar { float:left; width:320px; height:18px; background:url(icon_rank.gif) no-repeat 0 0;  }
+.themePickerList02 li .desc .rank .rankStarShow {  width:320px; height:18px; background:url(icon_rank.gif) no-repeat 0 -220px; }
+.themePickerList02 li .desc .rank .rankStar span { display:block; width:20px; height:18px; float:left; cursor:pointer; } 
+.themePickerList02 li .desc .rank .rankStar span b { visibility:hidden; }
+.themePickerList02 li .desc .rank .rankStar span.info { width:100px; color:#999; padding-left:10px; cursor:auto; }
+
+.best li .desc { width:495px;  }
+.best li .submiter { float:right; width:80px; text-align:center; }
+.best li .submiter p { line-height:140%; }
+.best li .submiter .submiter_avatar a img { background:#fff; padding:1px; border:1px solid #ddd; }
+.best li .submiter .submiter_avatar a:hover img { border:1px solid #6bb044; }
+.best li .desc .intro .introtext { width:495px; }
+
+.customtheme li .desc { width:570px; }
+.customtheme li .desc .intro .introtext { width:570px; }
+.customtheme li .desc .themeAction { color:#aaa; text-align:right; padding:0 0 0 70px; margin-top:5px; }
+
+.customtheme li .desc .themeAction a { color:#aaa; }
+.customtheme li .desc .themeAction a:hover { color:#6bb044; }
+.customtheme li .desc .themeAction span { color:#6bb044; }
+.customtheme li .desc .themeAction em { color:#ff9933; }
+.customtheme li .thumbs .pic img { width:150px; }
+
+.themePickerList02 li .desc .rank .rankStar1 { background-position:0 -20px; }
+.themePickerList02 li .desc .rank .rankStar2 { background-position:0 -40px; }
+.themePickerList02 li .desc .rank .rankStar3 { background-position:0 -60px; }
+.themePickerList02 li .desc .rank .rankStar4 { background-position:0 -80px; }
+.themePickerList02 li .desc .rank .rankStar5 { background-position:0 -100px; }
+.themePickerList02 li .desc .rank .rankStar6 { background-position:0 -120px; }
+.themePickerList02 li .desc .rank .rankStar7 { background-position:0 -140px; }
+.themePickerList02 li .desc .rank .rankStar8 { background-position:0 -160px; }
+.themePickerList02 li .desc .rank .rankStar9 { background-position:0 -180px; }
+.themePickerList02 li .desc .rank .rankStar10 { background-position:0 -200px; }
+
+.themeImport .themeImportChose { margin:15px 0; padding:0 3px; }
+.themeInfo { margin:15px 0 30px; padding:0 6px; }
+
+.themeInfo p { color:#999; line-height:150%; padding:5px 0; }
+.themeInfo table { width:100%; }
+.themeInfo table th { width:80px; padding-top:10px; }
+.themeInfo table td { padding-top:10px; height:30px; }
+.themeInfo table textarea { width:450px; height:4em; overflow: auto; margin-bottom:10px; }
+.themeInfo table .thumbs img { width:150px; float:left; }
+.themeInfo table .thumbs span.desc { float:left; margin-top:40px; margin-left:10px; }
+.themeInfo table .thumbs div { float:left; display:inline; margin-left:10px; padding-top:20px; }
+
+div.allItemList ul { margin:4px 4px 10px 10px; height:260px; overflow:auto;}
+div.allItemList li { line-height: 22px; height:22px; border-bottom:1px solid #ccc; margin: 4px 0;}
+div.allItemList li label { float:left; width: 160px; padding:0; margin:0; line-height:22px;}
+html div.allItemList li label span { float:left; font-weight:bold;}
+div.allItemList li input { float:left; margin: 4px 4px 0 0 !important; }
+div.allItemList li input { margin:0 4px 0 0; }
+div.allItemList div.input, div.attr_edit div.input { text-align:center;  }
+div.allItemList input, div.attr_edit div.input input { padding: 2px 10px; margin-bottom: 8px;}
+
+div.attr_edit ul { margin:4px 4px 10px 10px; }
+div.attr_edit li { line-height: 24px; margin: 4px 0; vertical-align:top;}
+div.attr_edit span.caption { width: 80px; text-align:right; float:left; display:block; margin-right: 4px;}
+div.attr_edit li input { height:18px; line-height:18px; border:1px solid #aaa; width: 240px; }
+div.attr_edit li textarea { height:160px;  line-height:18px; width:340px; border:1px solid #aaa;}
+div.attr_edit li select { height:22px; width:120px; border:1px solid #aaa;}
+
+/* Theme Settings */
+.pri_ThemeList01 { width:100%; margin:15px 0; }
+.pri_ThemeList01 thead th { color:#6bb044; }
+.pri_ThemeList01 th { height:30px; padding:0 10px; }
+.pri_ThemeList01 td {  padding:0 10px; height:40px; }
+.pri_ThemeList01 .odd th, .pri_ThemeList01 .odd td { background:#fafafa; }
+.pri_ThemeList01 .tdCenter { text-align:center; }
+.pri_ThemeList01 td textarea { width:510px; height:60px; overflow:auto; margin:14px 0 10px; }

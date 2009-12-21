@@ -46,7 +46,30 @@
   <div id="outerSidebar">
     <div id="sidebar">
       <div class="sideTop"></div>
-      {{ blog.sidebar('1') }}
+      {% for widget in blog.sidebar(1) %}
+      <div id="{{ widget.key_name }}" class="module">
+      	<div class="modTop"></div>
+      	<h2>{{ widget.name() }}</h2>
+      	<div class="modBody">
+      	  {{ widget.body() }}
+          <!-- <ul><li><a href='/logs/52531610.html'>在那晚空前的后摇飨宴上我们的身躯不曾动摇</a></li>
+
+            <li><a href='/logs/52531012.html'>A CUP IS A TRAGEDY</a></li>
+            <li><a href='/logs/52301770.html'>后摇之夜</a></li>
+            <li><a href='/logs/52130144.html'>Astro</a></li>
+            <li><a href='/logs/51709269.html'>啊</a></li>
+            <li><a href='/logs/51046579.html'>It doesn't matter</a></li>
+            <li><a href='/logs/49031560.html'>刷过去...</a></li>
+            <li><a href='/logs/49031370.html'>“卡特琳娜·布雷娅”梦魇</a></li>
+            <li><a href='/logs/48254170.html'>迟早，我们会再见的，一路走好</a></li>
+            <li><a href='/logs/47885432.html'>电子乐@SH</a></li>
+
+          </ul>
+          <div class="more"><a href="/logs/">全部日志>></a></div> -->
+        </div>
+        <div class="modBottom"></div>
+      </div>
+      {% endfor %}
       <div class="sideBottom"></div>
     </div>
   </div>

@@ -44,9 +44,9 @@ class edit(object):
             category = Category.get_by_id(int(category_id))
         else:
             category = Category()
-            max_sort_category = Category.all().order('-sort').fetch(1)
+            max_sort_category = Category.all().order('-sort').get()
             if max_sort_category:
-                max_sort_category = max_sort_category.pop()
+                # max_sort_category = max_sort_category.pop()
                 max_sort = max_sort_category.sort
                 if not max_sort:
                     max_sort = 0

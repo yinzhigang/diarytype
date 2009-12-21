@@ -21,6 +21,7 @@ urls = (
     '/admin/theme/widget', 'theme.admin.widget',
     
     '/admin/setting', 'blog.admin.setting',
+    '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
     
     '/theme/(\w+)/(.+)', 'theme.theme_file',

@@ -9,11 +9,31 @@
 <style type="text/css">
 #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
 #sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; background:#E6E6E6; border:1px solid #D3D3D3; }
-/*.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 10px !important; }
-.ui-sortable-placeholder * { visibility: hidden; }*/
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 30px !important; background:#F5F5F5; }
+.ui-sortable-placeholder * { visibility: hidden; }
 </style>
 <script type="text/javascript">
-$(function() {
+function update_sidebar() {
+  columns = {};
+  $('div.column').each(function() {
+    sidebar_id = $(this).attr('id');
+    sidebar_id = sidebar_id.replace(/layout_column/g, '')
+    // console.log(sidebar_id);
+    
+    sidebar_column = new Array();
+    $(this).find('div.side').each(function() {
+      item = {'name': $(this).attr('id')};
+      sidebar_column.push(item);
+    });
+    columns[sidebar_id] = sidebar_column;
+  });
+  // console.log(JSON.stringify(columns));
+  $.post('/admin/theme/widget', JSON.stringify(columns), function(data) {
+    // console.log(data);
+  }, 'json');
+}
+
+$(document).ready(function() {
 	$('.column').sortable({
 		items: '> div.side',
 		cursor: 'move',
@@ -24,6 +44,7 @@ $(function() {
       ui.helper.addClass('itemactive');
     },
     update: function(e,ui) {
+      update_sidebar();
       // console.log(ui);
     },
     stop: function(e,ui) {
@@ -33,10 +54,7 @@ $(function() {
   $('td#posCenter div.main > div.side').draggable({
     connectToSortable: '.column',
     helper: 'clone',
-    revert: 'invalid',
-    // start: function(e,ui) {
-    //       ui.helper.css("width", ui.item.width());
-    //     }
+    revert: 'invalid'
   });
 });
 </script>
@@ -76,47 +94,24 @@ $(function() {
                 <div class="main">
                   <h3>可选插件</h3>
                   {% for widget in widgets %}
-                  <div id="{{ widget.name }}" class="side">
+                  <div id="{{ widget.name }}" class="side" style="width:227px;">
                     <h4><span class="title">{{ widget.item().name() }}</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
                   </div>
                   {% endfor %}
                 </div>
               </td>
               <td id="posRight1">
-                <div id="layout_column1" class="column" style="position: relative; width: 230px;">
-                  <h3>副栏 1 <!-- <a class="mod_add" title="添加模块" href="#">[添加模块]</a> --></h3>
-                  <div id="profile" class="side">
-                    <h4><span class="title">个人信息</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
+                {% for num in range(sidebar_num) %}
+                {% set num = (num + 1)|string() %}
+                <div id="layout_column{{ num }}" class="column" style="position:relative;width:230px;min-height:76px">
+                  <h3>副栏 {{ num }}</h3>
+                  {% for s in processor.sidebar(num) %}
+                  <div id="{{ s.key_name }}" class="side">
+                    <h4><span class="title">{{ s.name() }}</span><!-- <span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span> --></h4>
                   </div>
-                  <div id="posts" class="side">
-                    <h4><span class="title">最新文章</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="comments" class="side">
-                    <h4><span class="title">最新评论</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="tag" class="side">
-                    <h4><span class="title">Tags</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="sort" class="side">
-                    <h4><span class="title">文章分类</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
+                  {% endfor %}
                 </div>
-                
-                <div id="layout_column1" class="column" style="position: relative; width: 230px;">
-                  <h3>副栏 2 <!-- <a class="mod_add" title="添加模块" href="#">[添加模块]</a> --></h3>
-                  <div id="link" class="side">
-                    <h4><span class="title">友情链接</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="login" class="side">
-                    <h4><span class="title">管理</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="html1" class="side">
-                    <h4><span class="title">自定义HTML 1</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                  <div id="html2" class="side">
-                    <h4><span class="title">自定义HTML 2</span><span class="editMod"><a class="mod_edit" title="编辑" href="#">[编辑]</a></span></h4>
-                  </div>
-                </div>
+                {% endfor %}
               </td>
               <td id="posRight2"></td>
             </tr>

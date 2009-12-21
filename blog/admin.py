@@ -2,6 +2,8 @@
 
 import web
 
+from google.appengine.api import memcache
+
 from blog.models import Blog
 from util.template import render
 from util import requires_admin
@@ -30,6 +32,14 @@ class setting(object):
         blog.description = inp.description
         blog.custom_header = inp.custom_header
         blog.update()
+        
+        raise web.seeother('/admin/setting')
+
+class clear_cache(object):
+    """清除memcache缓存"""
+    @requires_admin
+    def GET(self):
+        memcache.flush_all()
         
         raise web.seeother('/admin/setting')
 

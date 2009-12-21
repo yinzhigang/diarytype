@@ -16,13 +16,15 @@ class PerformancePrefixLoader(PrefixLoader):
     """加强缓存，模板加载系统"""
     def load(self, environment, name, globals=None):
         """Loads a Python code template"""
+        if DEBUG:
+            return super(PerformancePrefixLoader, self) \
+                        .load(environment,name,globals)
         if globals is None:
             globals = {}
         code = memcache.get('tempelate_' + name)
         if code is None:
             logging.info("oops no memcache!!")
             source, filename, uptodate = self.get_source(environment, name)
-            # template = file(filename).read().decode('ascii').decode('utf-8')
             code = environment.compile(source, raw=True)
             memcache.set('tempelate_' + name, code)
             logging.info(name)

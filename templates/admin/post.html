@@ -57,7 +57,7 @@ tinyMCE.init({
           <p><label class="caption">标题：</label><input id="id_title" type="text" class="title" value="{{ post.title }}" name="title" /></p>
           <p>
             <label style="font-weight:bold;">分类：</label>
-            <select name="category">
+            <select name="category" style="min-width:100px;">
               <option value=""></option>
               {% for category in categories %}
               <option value="{{ category.key() }}"{% if post.category and post.category.key() == category.key() %} selected="selected"{% endif %}>{{ category.name }}</option>
