@@ -6,8 +6,8 @@ from post.models import Post
 class Comment(db.Model):
     """评论模块"""
     post = db.ReferenceProperty(Post)
-    username = db.StringProperty()
+    name = db.StringProperty()
     email = db.EmailProperty()
     homepage = db.LinkProperty()
-    comment = db.TextProperty()
+    content = db.TextProperty()
     created = db.DateTimeProperty(auto_now_add=True)

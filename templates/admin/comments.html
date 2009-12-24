@@ -21,17 +21,19 @@
       <table cellpadding="0" cellspacing="0" class="list">
         <thead>
           <tr>
-            <th>ID</th><th width="50%">姓名</th><th>内容</th><th>操作</th>
+            <th>ID</th><th>文章</th><th>姓名</th><th>内容</th><th>操作</th>
           </tr>
         </thead>
         <tbody>
           {% for comment in comments -%}
           <tr class="{{ loop.cycle('odd', '') }}">
             <td>{{ comment.key().id() }}</td>
-            <td>{{ comment.username|e }}</td>
-            <td>{{ comment.comment|e }}</td>
+            <td>{{ comment.post.title }}</td>
+            <td>{{ comment.name|e }}</td>
+            <td>{{ comment.content|e }}</td>
             <td class="action">
-              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  post.key().id() }}';return false;" class="delete">删除</a>
+              <a href="/admin/comment/replay/{{ comment.key().id() }}" class="edit">回复</a>
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  comment.key().id() }}';return false;" class="delete">删除</a>
             </td>
           </tr>
           {%- endfor %}

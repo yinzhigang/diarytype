@@ -4,6 +4,7 @@ from StringIO import StringIO
 
 from post.models import Post, Tag
 from category.models import Category
+from comment.models import Comment
 
 class Widget(object):
     """博客装饰"""
@@ -15,7 +16,8 @@ class Widget(object):
     def name(self):
         return ''
 
-default_widgets = ['categories', 'recent_entries', 'hot_tags', 'custom_html']
+default_widgets = ['categories', 'recent_entries', 'recent_comments',
+            'hot_tags', 'custom_html']
 
 class categories(Widget):
     """文章分类装饰"""
@@ -56,6 +58,27 @@ class recent_entries(Widget):
         
         return '\n'.join(content)
 
+class recent_comments(Widget):
+    """新新评论"""
+    key_name = 'recent_comments'
+    def name(self):
+        return u"最新评论"
+    
+    def body(self):
+        comments = Comment.all().order('-created').fetch(10)
+        
+        content = []
+        write = content.append
+        write('<ul>')
+        for comment in comments:
+            write("""<li>
+            <span class="author"><a href="%s" target="_blank">%s</a></span>
+            <a href="%s#cmt">%s</a>
+            </li>""" % (comment.homepage, comment.name, comment.post.getUrl(), comment.content))
+        write('</ul>')
+        
+        return '\n'.join(content)
+
 class hot_tags(Widget):
     """热门Tag云图"""
     key_name = 'tags'
@@ -68,8 +91,8 @@ class hot_tags(Widget):
         content = []
         write = content.append
         for tag in tag_list:
-            write('<span class=""><a href="">%s</a></span>' %
-                    (tag.name))
+            write('<span class=""><a href="%s">%s</a></span>' %
+                    (tag.getUrl(), tag.name))
         
         return '\n'.join(content)
 

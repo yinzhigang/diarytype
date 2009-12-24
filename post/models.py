@@ -22,7 +22,9 @@ class Post(db.Model):
     hidden = db.BooleanProperty(default=False)
     allow_comment = db.BooleanProperty(default=True)
     allow_ping = db.BooleanProperty(default=True)
+    comment_count = db.IntegerProperty(default=0)
     date = db.DateTimeProperty(auto_now_add=True)
+    created = db.DateTimeProperty(auto_now_add=True)
     
     @property
     def taglist(self):
@@ -55,3 +57,7 @@ class Tag(db.Model):
             return tag
         else:
             return None
+    
+    def getUrl(self):
+        """列表地址URL"""
+        return '/tag/%s' % self.name

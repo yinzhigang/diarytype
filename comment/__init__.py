@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import web
+import hashlib
 
+from post.models import Post
 from comment.models import Comment
 
 class comment(object):
@@ -9,5 +11,40 @@ class comment(object):
     def POST(self):
         inp = web.input()
         
-        username = inp.get('username')
+        post_key = inp.get('post')
+        post = Post.get(post_key)
+        if not post or not post.allow_comment:
+            raise web.forbidden()
         
+        checksum = inp.get('checksum')
+        referer = web.ctx.env.get('HTTP_REFERER')
+        i = referer.find('#')
+        if i > 0:
+            referer = referer[:i]
+        
+        real_checksum = hashlib.sha1(referer + post_key).hexdigest()
+        real_checksum = real_checksum[:15] + 'l' + real_checksum[16:]
+        if checksum != real_checksum:
+            raise web.forbidden()
+        
+        name = inp.get('name')
+        email = inp.get('email')
+        homepage = inp.get('homepage')
+        if not homepage.startswith('http://') and \
+                            not homepage.startswith('https://'):
+            homepage = 'http://' + homepage
+            
+        content = inp.get('content')
+        
+        comment = Comment()
+        comment.post = post
+        comment.name = name
+        comment.email = email
+        comment.homepage = homepage
+        comment.content = content
+        comment.save()
+        
+        post.comment_count = post.comment_count + 1
+        post.save()
+        
+        raise web.seeother(referer + '#cmt')

@@ -31,7 +31,7 @@ target="_blank">本声明</a><br />
           </div>
           <div class="postFooter">
             <div class="tags">Tag：{{ post.taglist }} </div>
-            <div class="menubar"><span class="author"> 发表于<span class="time">15:13:22</span> | <a href="#" class='edit'>编辑</a></div>
+            <div class="menubar"><span class="author"> 发表于<span class="time">{{ post.date|date('%H:%M:%S') }}</span> | <a href="#" class='edit'>编辑</a></div>
           </div>
         </li>
         <div class="postsBottom"></div>
@@ -39,30 +39,27 @@ target="_blank">本声明</a><br />
       <a name="cmt"></a>
       <ul id="comments">
         <h2>评论</h2>
+        {% for comment in comments %}
         <li>
-          <div class='cmtBody'>呃..是280...不是380....<br />
-            另外，您睡的比我早。我照例的...是早上5点睡的..<br />
-            还有，整场我穿得最对路，在一堆抱着大衣的人里，只有我，一件衬衫，最轻松...<br />
-            再就是...我，照例的，顺回来了只杯子..<br />
-            我还吼了那个咔吧男一声....<br />
-            最后，北京的演出是在愚公移山，我们...至少是我...去过的－－如我所说...</div>
-          <div class="reCmtBody">
+          <div class='cmtBody'>{{ comment.content|e }}</div>
+          <!-- <div class="reCmtBody">
             <div><span class="author">innocent_sin</span>回复<span>eva</span>说：</div>
             <div class="content">呃 380的是另一张。带DVD...<br />
               我承认我那天没注意穿衣打扮，您别在意。顺杯子没什么不好，谁让他们一杯可乐卖20... 以后早点睡吧。我担心您身体，还有一半的路要一起走的。</div>
             <div class="time">2009-11-29 18:55:03</div>
-          </div>
-          <div class='menubar'><span class='author'>eva | </span> 发表于<span class='time'>2009-11-29 18:45:47</span> <span>[<a href="#" onclick="#" rel="facebox">回复</a>]</span></div>
+          </div> -->
+          <div class='menubar'><span class='author'>{{ comment.name }} | </span> 发表于<span class='time'>{{ comment.created|date('%Y-%m-%d %H:%M:%S') }}</span> <!-- <span>[<a href="#" onclick="#" rel="facebox">回复</a>]</span> --></div>
         </li>
+        {% endfor %}
       </ul>
       {% if post.allow_comment %}
       <div id="commentForm">
         <h2>发表评论</h2>
         <a name="cmt_form"></a>
-        <form method="post" action="#" onsubmit="return check_cmt(this);">
+        <form method="post" action="/comment" onsubmit="return check_cmt(this);">
           <div>
             <label for="cname">姓　名</label>
-            <input class="textField" id="cname" name="username" type="text" />
+            <input class="textField" id="cname" name="name" type="text" />
           </div>
           <div>
             <label for="cemail">E-Mail</label>
@@ -76,15 +73,16 @@ target="_blank">本声明</a><br />
             <textarea name="content" rows="8"></textarea>
           </div>
           <div class="submit">
-            <input type="hidden" name="postId" value="{{ post.key() }}" />
-            <input type="hidden" name="checksum" value="763e0fe4042ac1d2825a96e1f2323277" />
-            <input class="button" name="addsub" value="提交" type="submit" />
-            <!-- <span class="rememberBox">
-            <input id="cremember" name="remember" Checked="true" type="checkbox" class="cremember" style="margin:0; padding:0; border:0; width:auto;" />
-            记住我</span> -->
+            <input type="hidden" name="post" value="{{ post.key() }}" />
+            <input type="hidden" name="checksum" value="{{ checksum }}" />
+            <input class="button" id="submit_comment" name="addsub" value="提交" type="submit" />
+            <span class="rememberBox">
+            <input id="remember" name="remember" checked="true" type="checkbox" class="cremember" style="margin:0; padding:0; border:0; width:auto;" />
+            记住我</span>
           </div>
         </form>
       </div>
+      <script src="/static/js/comment_helper.js" type="text/javascript"></script>
       {% endif %}
       <div class="contentBottom"></div>
     </div>

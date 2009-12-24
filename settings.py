@@ -25,13 +25,15 @@ urls = (
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
     
+    '/comment', 'comment.comment',
+    
     '/theme/(\w+)/(.+)', 'theme.theme_file',
     
     '/category/(.*)', 'post.category_post',
-    '/tag/(.*)', '',
+    '/tag/(.*)', 'post.tag_post',
     
+    '/', 'post.posts',
     '/post/(\d+)', 'post.show',
-    '.*', 'post.posts',
 )
 
 DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')
