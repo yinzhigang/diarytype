@@ -31,6 +31,10 @@ class Post(db.Model):
             return ','.join(self.tags)
         except:
             return ''
+    
+    def getUrl(self):
+        """获取文章访问地址"""
+        return '/post/%s' % self.key().id()
 
 class Tag(db.Model):
     """Tag Model"""

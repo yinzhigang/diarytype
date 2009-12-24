@@ -33,11 +33,10 @@ class Processor(object):
             
             if theme_widget.has_key(number):
                 setting = theme_widget.get(number)
-                
                 if setting:
                     return SidebarWidget(setting)
         
-        return {}
+        return []
 
 class SidebarWidget(object):
     """侧边条装饰，加载调用类"""

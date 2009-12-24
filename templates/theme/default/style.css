@@ -157,6 +157,10 @@ ul { list-style:none; }
 
 #sidebar li { background:url(images/bullet.gif) no-repeat .1em .4em; padding-left:1.3em; margin:.2em 0; line-height:1.7em; }
 
+#sidebar #tags span { line-height:200%; margin: 0px 5px; }
+#sidebar #tags span a { color:#666666;/* font-weight:bold;*/ }
+#sidebar #tags span a:hover { color:#419639; }
+
 .count { margin-left:.5em; }
 
 .button { font-family:Verdana, Arial, sans-serif; font-size:100%; letter-spacing:.5em; padding:.13em 0 .25em .6em; width:4.5em; height:1.8em; background:#999; color:#FFF; border:0; cursor:pointer; vertical-align:middle; }

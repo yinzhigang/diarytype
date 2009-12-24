@@ -56,6 +56,7 @@ class edit(object):
         
         inp = web.input()
         category.name = inp.name
+        category.alias = inp.get('alias')
         category.save()
         
         return web.seeother('/admin/categories')

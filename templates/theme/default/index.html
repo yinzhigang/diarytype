@@ -12,9 +12,9 @@
         <li class="list">
           <div class="postHeader">
             <h2>
-              <a href="/post/{{ post.key().id() }}">{{ post.title|e }}</a>
+              <a href="{{ post.getUrl() }}">{{ post.title|e }}</a>
               {% if post.category %}
-              <span class='category'> - [<a href='#'>{{ post.category.name }}</a>]</span>
+              <span class="category"> - [<a href="">{{ post.category.name }}</a>]</span>
               {% endif %}
             </h2>
             <h3>{{ post.date|date("%Y-%m-%d") }}</h3>
@@ -25,7 +25,7 @@
           </div>
           <div class="postFooter">
             <div class="tags">Tag：{{ post.taglist|e }} </div>
-            <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="/post/{{ post.key().id() }}" class="readmore">阅读全文</a> | <a href="/post/{{ post.key().id() }}#cmt" class="cmt">评论 <span class="count">12</span></a> | <a href="#" class='edit'>编辑</a></div>
+            <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="/post/{{ post.key().id() }}" class="readmore">阅读全文</a> | <a href="/post/{{ post.key().id() }}#cmt" class="cmt">评论 <span class="count">12</span></a> | <a href="#" class="edit">编辑</a></div>
           </div>
         </li>
         {% endfor %}
@@ -52,20 +52,6 @@
       	<h2>{{ widget.name() }}</h2>
       	<div class="modBody">
       	  {{ widget.body() }}
-          <!-- <ul><li><a href='/logs/52531610.html'>在那晚空前的后摇飨宴上我们的身躯不曾动摇</a></li>
-
-            <li><a href='/logs/52531012.html'>A CUP IS A TRAGEDY</a></li>
-            <li><a href='/logs/52301770.html'>后摇之夜</a></li>
-            <li><a href='/logs/52130144.html'>Astro</a></li>
-            <li><a href='/logs/51709269.html'>啊</a></li>
-            <li><a href='/logs/51046579.html'>It doesn't matter</a></li>
-            <li><a href='/logs/49031560.html'>刷过去...</a></li>
-            <li><a href='/logs/49031370.html'>“卡特琳娜·布雷娅”梦魇</a></li>
-            <li><a href='/logs/48254170.html'>迟早，我们会再见的，一路走好</a></li>
-            <li><a href='/logs/47885432.html'>电子乐@SH</a></li>
-
-          </ul>
-          <div class="more"><a href="/logs/">全部日志>></a></div> -->
         </div>
         <div class="modBottom"></div>
       </div>

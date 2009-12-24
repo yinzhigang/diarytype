@@ -27,9 +27,11 @@ urls = (
     
     '/theme/(\w+)/(.+)', 'theme.theme_file',
     
-    '/', 'post.posts',
+    '/category/(.*)', 'post.category_post',
+    '/tag/(.*)', '',
+    
     '/post/(\d+)', 'post.show',
-    '/(.*)', 'hello',
+    '.*', 'post.posts',
 )
 
 DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')

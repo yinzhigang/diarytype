@@ -2,7 +2,7 @@
 
 from StringIO import StringIO
 
-from post.models import Post
+from post.models import Post, Tag
 from category.models import Category
 
 class Widget(object):
@@ -15,7 +15,7 @@ class Widget(object):
     def name(self):
         return ''
 
-default_widgets = ['categories', 'recent_entries', 'custom_html']
+default_widgets = ['categories', 'recent_entries', 'hot_tags', 'custom_html']
 
 class categories(Widget):
     """文章分类装饰"""
@@ -30,10 +30,11 @@ class categories(Widget):
         write = content.append
         write('<ul>')
         for category in category_list:
-            write('<li><a href="%s">%s</a></li>' % ('#', category.name))
+            write('<li><a href="%s">%s</a>(%s)</li>' % 
+                    (category.getUrl(), category.name, category.count))
         write('</ul>')
         
-        return ''.join(content)
+        return '\n'.join(content)
 
 class recent_entries(Widget):
     """最新文章装饰"""
@@ -42,16 +43,35 @@ class recent_entries(Widget):
         return u"最新文章"
     
     def body(self):
-        post_list = Post.all().filter('hidden =',False).order('-date').fetch(10)
+        post_list = Post.all().filter('hidden =',False)\
+                        .order('-date').fetch(10)
         
         content = []
         write = content.append
         write('<ul>')
         for post in post_list:
-            write('<li><a href="%s">%s</a></li>' % ('#', post.title))
+            write('<li><a href="%s">%s</a></li>' %
+                        (post.getUrl(), post.title))
         write('</ul>')
         
-        return ''.join(content)
+        return '\n'.join(content)
+
+class hot_tags(Widget):
+    """热门Tag云图"""
+    key_name = 'tags'
+    def name(self):
+        return u"热门Tag"
+    
+    def body(self):
+        tag_list = Tag.all().order('count').fetch(10)
+        
+        content = []
+        write = content.append
+        for tag in tag_list:
+            write('<span class=""><a href="">%s</a></span>' %
+                    (tag.name))
+        
+        return '\n'.join(content)
 
 class custom_html(Widget):
     """自定义HTML装饰"""

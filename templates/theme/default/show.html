@@ -14,7 +14,7 @@
           <div class="postHeader">
             <h2>{{ post.title|e }}
               {% if post.category %}
-              <span class='category'> - [<a href='#'>{{ post.category.name|e }}</a>]</span>
+              <span class="category"> - [<a href="{{ post.category.getUrl() }}">{{ post.category.name|e }}</a>]</span>
               {% endif %}
             </h2>
             <h3>{{ post.date|date("%Y-%m-%d") }}</h3>
@@ -92,7 +92,16 @@ target="_blank">本声明</a><br />
   <div id="outerSidebar">
     <div id="sidebar">
       <div class="sideTop"></div>
-      {{ blog.sidebar('1') }}
+      {% for widget in blog.sidebar(1) %}
+      <div id="{{ widget.key_name }}" class="module">
+      	<div class="modTop"></div>
+      	<h2>{{ widget.name() }}</h2>
+      	<div class="modBody">
+      	  {{ widget.body() }}
+        </div>
+        <div class="modBottom"></div>
+      </div>
+      {% endfor %}
       <div class="sideBottom"></div>
     </div>
   </div>
