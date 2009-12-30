@@ -4,6 +4,7 @@ import web
 
 from blog.base_front import BaseFront
 
+from blog.models import Blog
 from post.models import Post, Tag
 from category.models import Category
 from comment.models import Comment
@@ -71,3 +72,30 @@ class show(BaseFront):
         comments = Comment.all().filter('post =', post).order('-created').fetch(10)
         
         return render('theme/show.html',post=post,checksum=checksum,comments=comments)
+
+class feed(BaseFront):
+    """种子输出"""
+    def GET(self):
+        from util.feedgenerator import Atom1Feed
+        
+        blog = Blog.get()
+        link = 'http://www.zhigang.net'
+        feed = Atom1Feed(
+            title=blog.name,
+            link=link,
+            description=blog.description,
+        )
+        posts = Post.all().filter('hidden =', False).order('-date').fetch(10)
+        for post in posts:
+            if post.category:
+                category = (post.category.name,)
+            else:
+                category = ()
+            feed.add_item(title=post.title,
+                          link=link + post.getUrl(),
+                          description=post.content,
+                          pubdate=post.date,
+                          categories=category
+                          )
+        web.header('Content-Type', 'application/atom+xml')
+        return feed.writeString('utf-8')

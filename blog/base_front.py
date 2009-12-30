@@ -23,6 +23,14 @@ class Processor(object):
         blog = Blog.get()
         return getattr(blog, name)
     
+    def header(self):
+        """前台博客通用Header"""
+        header = []
+        header.append('<link rel="alternate" type="application/rss+xml" href="/feed" />')
+        header.append(self.custom_header)
+        
+        return '\n'.join(header)
+    
     def sidebar(self, number='1'):
         """侧边条应用"""
         number = unicode(number)

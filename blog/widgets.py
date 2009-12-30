@@ -81,7 +81,7 @@ class recent_comments(Widget):
 
 class hot_tags(Widget):
     """热门Tag云图"""
-    key_name = 'tags'
+    key_name = 'hot_tags'
     def name(self):
         return u"热门Tag"
     

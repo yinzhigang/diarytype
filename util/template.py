@@ -18,7 +18,7 @@ class PerformancePrefixLoader(PrefixLoader):
         """Loads a Python code template"""
         if DEBUG:
             return super(PerformancePrefixLoader, self) \
-                        .load(environment,name,globals)
+                        .load(environment, name, globals)
         if globals is None:
             globals = {}
         code = memcache.get('tempelate_' + name)

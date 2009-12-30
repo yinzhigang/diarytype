@@ -1,0 +1,80 @@
+{% extends "admin/layout.html" %}
+{% block title %} 友情链接 {% endblock %}
+{% set link_active = 'active' %}
+
+{% block header %}
+<script type="text/javascript" src="/static/js/jquery-ui-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/json.js"></script>
+<script type="text/javascript" charset="utf-8">
+var fixHelper = function(e, ui) {
+  ui.children().each(function() {
+    $(this).width($(this).width());
+  });
+  return ui;
+}
+$(document).ready(function() {
+  $("table.list tbody").sortable({
+    helper: fixHelper,
+    update: function (event, ui) {
+      items = {};
+      $(this).find('tr').each(function(i, val) {
+        id = this.id;
+        sort = i + 1;
+        items[id] = sort;
+        $(this).find('td.sort_num').html(sort);
+      });
+      // console.log(items);
+      $.post('/admin/links', JSON.stringify(items), function(data) {
+        // console.log(data);
+      }, 'json');
+      $(this).find('tr').removeClass();
+      $(this).find('tr:even').addClass('odd');
+    }
+  }).disableSelection();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/link/new">新增友情链接</a></li>
+        <li><a href="/admin/links" class="active">友情链接</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/links" class="active">友情链接</a></h2>
+
+    <div id="main">
+      <h3>友情链接</h3>
+
+      <table cellpadding="0" cellspacing="0" id="link_list" class="list">
+        <thead>
+          <tr>
+            <th>ID</th><th>排序</th><th width="20%">名称</th><th>链接</th><th width="70">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for link in links -%}
+          <tr id="{{ link.key().id() }}" class="{{ loop.cycle('odd', '') }}">
+            <td>{{ link.key().id() }}</td>
+            <td class="sort_num">{{ link.sort }}</td>
+            <td>{{ link.name|e }}</td>
+            <td>{{ link.url }}
+            <td class="action">
+              <a href="/admin/category/edit/{{ link.key().id() }}" class="edit">修改</a>
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/link/delete/{{  link.key().id() }}';return false;" class="delete">删除</a>
+            </td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+      <div>拖拽表格排序</div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

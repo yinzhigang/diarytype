@@ -10,12 +10,16 @@ urls = (
     '/admin/post/edit/(\d+)', 'post.admin.edit',
     '/admin/post/delete/(\d+)', 'post.admin.delete',
     
+    '/admin/comments', 'comment.admin.comments',
+    
     '/admin/categories', 'category.admin.categories',
     '/admin/category/new', 'category.admin.edit',
     '/admin/category/edit/(\d+)', 'category.admin.edit',
     '/admin/category/delete/(\d+)', 'category.admin.delete',
     
-    '/admin/comments', 'comment.admin.comments',
+    '/admin/links', 'links.admin.links',
+    '/admin/link/new', 'links.admin.edit',
+    '/admin/link/edit/(\d+)', 'links.admin.edit',
     
     '/admin/theme', 'theme.admin.theme',
     '/admin/theme/widget', 'theme.admin.widget',
@@ -24,6 +28,8 @@ urls = (
     '/admin/setting', 'blog.admin.setting',
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
+    
+    '/feed', 'post.feed',
     
     '/comment', 'comment.comment',
     

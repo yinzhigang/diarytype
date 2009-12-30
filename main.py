@@ -16,7 +16,6 @@
 ###############################################################################
 import web
 import wsgiref
-# from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
 
@@ -28,10 +27,32 @@ class hello:
             name = 'world'
         return 'hello ' + name
 
-def main():
+def real_main():
     wsgiapp = app.wsgifunc()
     wsgiref.handlers.CGIHandler().run(wsgiapp)
     # run_wsgi_app(wsgiapp)
+
+def profile_main():
+    # This is the main function for profiling 
+    # We've renamed our original main() above to real_main()
+    import cProfile, pstats
+    import logging
+    import cStringIO as StringIO
+    prof = cProfile.Profile()
+    prof = prof.runctx("real_main()", globals(), locals())
+    stream = StringIO.StringIO()
+    stats = pstats.Stats(prof, stream=stream)
+    # print "<pre>"
+    # stats = pstats.Stats(prof)
+    stats.sort_stats("time")  # Or cumulative
+    stats.print_stats(80)  # 80 = how many to print
+    # The rest is optional.
+    # stats.print_callees()
+    # stats.print_callers()
+    # print "</pre>"
+    logging.info("Profile data:\n%s", stream.getvalue())
+
+main = real_main
 
 if __name__ == "__main__":
     main()

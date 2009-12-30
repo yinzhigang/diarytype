@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{% block title %}{% endblock %} {{ blog.name|e }}</title>
 <link href="/theme/default/style.css" rel="stylesheet" type="text/css" media="screen" />
-{{ blog.custom_header }}
+{{ blog.header() }}
 </head>
 
 <body>
@@ -19,6 +19,7 @@
         <h2>文章分类</h2>
         <div class="modBody">
           <ul>
+            <li><a href="/">Home</a></li>
             <!-- <li><a href="#">un-categoried<span class='count'>[15]</span></a></li>
             <li><a href="#">梦魇<span class='count'>[3]</span></a></li>
             <li><a href="#">I...exist<span class='count'>[4]</span></a></li>
