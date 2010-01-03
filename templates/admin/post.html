@@ -1,12 +1,17 @@
 {% extends "admin/layout.html" %}
 {% block title %}{{ title }}{% endblock %}
-{% if post %}
+{% if post.created %}
 {% set posts_active = 'active' %}
 {% else %}
 {% set post_active = 'active' %}
 {% endif %}
 
 {% block header %}
+<link type="text/css" rel="stylesheet" media="all" href="/static/js/jscalendar-1.0/calendar-system.css" />
+<script type="text/javascript" src="/static/js/jscalendar-1.0/calendar_stripped.js"></script>
+<script type="text/javascript" src="/static/js/jscalendar-1.0/calendar-setup_stripped.js"></script>
+<script type="text/javascript" src="/static/js/jscalendar-1.0/lang/cn_utf8.js"></script>
+
 <script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
@@ -23,7 +28,6 @@ tinyMCE.init({
   theme_advanced_resizing : true,
   theme_advanced_resize_horizontal : false,
   extended_valid_elements : "code[name|class],pre[name|class|style]",
-  
   theme_advanced_buttons1:
   "justifyleft,justifycenter,justifyright,justifyfull,|,bold,italic,strikethrough,|,forecolor,backcolor,|,sub,sup,|,charmap|,formatselect,fontsizeselect",
   theme_advanced_buttons2:
@@ -57,14 +61,24 @@ tinyMCE.init({
           <p><label class="caption">标题：</label><input id="id_title" type="text" class="title" value="{{ post.title }}" name="title" /></p>
           <p>
             <label style="font-weight:bold;">分类：</label>
-            <select name="category" style="min-width:100px;">
+            <select name="category" style="min-width:100px;max-width:130px;">
               <option value=""></option>
               {% for category in categories %}
               <option value="{{ category.key() }}"{% if post.category and post.category.key() == category.key() %} selected="selected"{% endif %}>{{ category.name }}</option>
               {% endfor %}
             </select>
             <label style="font-weight:bold;">发布时间：</label>
-            <input name="published" readonly="readonly" class="text-medium" value="{{ post.date|date("%Y-%m-%d %H:%M:%S") }}" />
+            <input id="id_date" name="date" type="text" readonly="readonly" class="text-medium" value="{{ post.date|date("%Y-%m-%d %H:%M:%S") }}" />
+            <script type="text/javascript">
+              Calendar.setup({
+                inputField  : "id_date",
+                ifFormat    : "%Y-%m-%d %H:%M:%S",
+                showsTime   : true,
+                button      : "id_date"
+              });
+            </script>
+            <label style="font-weight:bold;">文章别名：</label>
+            <input id="id_alias" name="alias" type="text" class="text-medium" value="{{ post.alias }}" />
           </p>
           <p><label class="caption">内容：</label><textarea id="id_content" rows="10" cols="40" name="content">{{ post.content|e }}</textarea></p>
           <p><label class="caption">Tags：</label><input type="text" size="50" id="id_tags" class="text-long" value="{{ post.taglist|e }}" name="tags"/></p>

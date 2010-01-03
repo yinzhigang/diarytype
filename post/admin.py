@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import web
+from datetime import datetime
 
 from post.models import Post, Tag
 from category.models import Category
@@ -25,13 +26,14 @@ class edit(object):
     """日志新增修改"""
     @requires_admin
     def GET(self, post_id=None):
-        post = None
+        post = {}
         if post_id:
             # post = Post.get(db.Key.from_path(Post.kind(), int(post_id)))
             post = Post.get_by_id(int(post_id))
             title = u'修改日志'
         else:
             title = u'写新日志'
+            post['date'] = datetime.now()
         
         categories = Category.all().order('sort')
         
@@ -43,6 +45,9 @@ class edit(object):
     @requires_admin
     def POST(self, post_id=None):
         """保存日志信息"""
+        import pytz
+        from blog.models import blog
+        
         if post_id:
             post = Post.get_by_id(int(post_id))
         else:
@@ -51,8 +56,16 @@ class edit(object):
         inp = web.input()
         
         post.title = inp.title
+        post.alias = inp.alias
         post.content = inp.content
         post.excerpt = inp.excerpt
+        if inp.get('date'):
+            tz = pytz.timezone(blog.timezone)
+            date = inp.get('date')
+            date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date_tz = date.replace(tzinfo=tz)
+            # datetime = time.mktime(date)
+            post.date = date_tz
         post.allow_comment = bool(inp.get('allow_comment'))
         post.allow_ping = bool(inp.get('allow_ping'))
         post.hidden = bool(inp.get('hidden'))

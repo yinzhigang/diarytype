@@ -8,6 +8,7 @@ from blog.models import Blog
 from post.models import Post, Tag
 from category.models import Category
 from comment.models import Comment
+
 from util.template import render
 from util.pager import PagerQuery
 
@@ -79,10 +80,10 @@ class feed(BaseFront):
         from util.feedgenerator import Atom1Feed
         
         blog = Blog.get()
-        link = 'http://www.zhigang.net'
+        blog_home = web.ctx.home
         feed = Atom1Feed(
             title=blog.name,
-            link=link,
+            link=blog_home,
             description=blog.description,
         )
         posts = Post.all().filter('hidden =', False).order('-date').fetch(10)
@@ -92,7 +93,7 @@ class feed(BaseFront):
             else:
                 category = ()
             feed.add_item(title=post.title,
-                          link=link + post.getUrl(),
+                          link=blog_home + post.getUrl(),
                           description=post.content,
                           pubdate=post.date,
                           categories=category

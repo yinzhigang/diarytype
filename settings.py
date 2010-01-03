@@ -3,7 +3,7 @@
 import os
 
 urls = (
-    '/admin/?', 'blog.admin.setting',
+    '/admin/?', 'blog.admin.dashboard',
     
     '/admin/posts', 'post.admin.posts',
     '/admin/post/new', 'post.admin.edit',
@@ -20,6 +20,7 @@ urls = (
     '/admin/links', 'links.admin.links',
     '/admin/link/new', 'links.admin.edit',
     '/admin/link/edit/(\d+)', 'links.admin.edit',
+    '/admin/link/delete/(\d+)', 'links.admin.delete',
     
     '/admin/theme', 'theme.admin.theme',
     '/admin/theme/widget', 'theme.admin.widget',

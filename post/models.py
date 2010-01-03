@@ -12,6 +12,7 @@ from category.models import Category
 class Post(db.Model):
     """文章存储结构"""
     title = db.StringProperty()
+    alias = db.StringProperty()
     category = db.ReferenceProperty(Category)
     content = db.TextProperty()
     tags = db.StringListProperty()

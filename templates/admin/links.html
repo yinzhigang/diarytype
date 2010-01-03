@@ -65,7 +65,7 @@ $(document).ready(function() {
             <td>{{ link.name|e }}</td>
             <td>{{ link.url }}
             <td class="action">
-              <a href="/admin/category/edit/{{ link.key().id() }}" class="edit">修改</a>
+              <a href="/admin/link/edit/{{ link.key().id() }}" class="edit">修改</a>
               <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/link/delete/{{  link.key().id() }}';return false;" class="delete">删除</a>
             </td>
           </tr>

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from StringIO import StringIO
+from google.appengine.api import memcache
 
 from post.models import Post, Tag
 from category.models import Category
 from comment.models import Comment
+from links.models import Link
 
 class Widget(object):
     """博客装饰"""
@@ -17,7 +18,7 @@ class Widget(object):
         return ''
 
 default_widgets = ['categories', 'recent_entries', 'recent_comments',
-            'hot_tags', 'custom_html']
+            'hot_tags', 'links', 'custom_html']
 
 class categories(Widget):
     """文章分类装饰"""
@@ -26,7 +27,10 @@ class categories(Widget):
         return u"文章分类"
     
     def body(self):
-        category_list = Category.all().order('sort')
+        category_list = memcache.get('widget_category_list')
+        if not category_list:
+            category_list = Category.all().order('sort')
+            memcache.set('widget_category_list', category_list)
         
         content = []
         write = content.append
@@ -45,8 +49,11 @@ class recent_entries(Widget):
         return u"最新文章"
     
     def body(self):
-        post_list = Post.all().filter('hidden =',False)\
-                        .order('-date').fetch(10)
+        post_list = memcache.get('widget_post_list')
+        if not post_list:
+            post_list = Post.all().filter('hidden =',False)\
+                            .order('-date').fetch(10)
+            memcache.set('widget_post_list', post_list)
         
         content = []
         write = content.append
@@ -65,7 +72,10 @@ class recent_comments(Widget):
         return u"最新评论"
     
     def body(self):
-        comments = Comment.all().order('-created').fetch(10)
+        comments = memcache.get('widget_comments')
+        if not comments:
+            comments = Comment.all().order('-created').fetch(10)
+            memcache.set('widget_comments', comments)
         
         content = []
         write = content.append
@@ -86,13 +96,38 @@ class hot_tags(Widget):
         return u"热门Tag"
     
     def body(self):
-        tag_list = Tag.all().order('count').fetch(10)
+        tag_list = memcache.get('widget_tag_list')
+        if not tag_list:
+            tag_list = Tag.all().order('count').fetch(10)
+            memcache.set('widget_tag_list', tag_list)
         
         content = []
         write = content.append
         for tag in tag_list:
             write('<span class=""><a href="%s">%s</a></span>' %
                     (tag.getUrl(), tag.name))
+        
+        return '\n'.join(content)
+
+class links(Widget):
+    """友情链接装饰"""
+    key_name = 'links'
+    def name(self):
+        return u"友情链接"
+    
+    def body(self):
+        links = memcache.get('widget_links')
+        if not links:
+            links = Link.all().order('sort')
+            memcache.set('widget_links', links)
+        
+        content = []
+        write = content.append
+        write('<ul>')
+        for link in links:
+            write('<li><a href="%s" target="_blank">%s</a></li>' %
+                    (link.url, link.name))
+        write('</ul>')
         
         return '\n'.join(content)
 

@@ -6,12 +6,25 @@ from links.models import Link
 from util.template import render
 from util import requires_admin
 
+import simplejson as json
+
 class links(object):
     """友情链接管理"""
     def GET(self):
-        links = Link.all()
+        links = Link.all().order('sort')
         
         return render('admin/links.html', links=links)
+    
+    def POST(self):
+        data = web.data()
+
+        sorted_data = json.loads(data)
+        for link_id, sort in sorted_data.iteritems():
+            link_id = Link.get_by_id(int(link_id))
+            link_id.sort = sort
+            link_id.save()
+
+        return json.dumps({'status': 'ok'})
 
 class edit(object):
     """新增修改友情链接"""
@@ -42,7 +55,19 @@ class edit(object):
         
         inp = web.input()
         link.name = inp.name
-        link.url = inp.get('url')
+        url = inp.get('url')
+        if not url.startswith(('http://', 'https://')):
+            url = 'http://' + url
+        link.url = url
         link.save()
         
+        return web.seeother('/admin/links')
+
+class delete(object):
+    """删除友情链接"""
+    def GET(self, link_id=None):
+        if link_id:
+            link = Link.get_by_id(int(link_id))
+            link.delete()
+
         return web.seeother('/admin/links')

@@ -24,8 +24,10 @@
             <div class="clear"></div>
           </div>
           <div class="postFooter">
-            <div class="tags">Tag：{{ post.taglist|e }} </div>
-            <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="{{ post.getUrl() }}" class="readmore">阅读全文</a> | <a href="/post/{{ post.key().id() }}#cmt" class="cmt">评论 <span class="count">{{ post.comment_count }}</span></a> | <a href="#" class="edit">编辑</a></div>
+            {% if post.tags %}
+            <div class="tags">Tag: {% for tag in post.tags %}<a href="/tag/{{ tag|e }}">{{ tag|e }}</a>{% endfor %} </div>
+            {% endif %}
+            <div class="menubar"> 发表于<span class="time">{{ post.date|date("%H:%M:%S") }}</span> | <a href="{{ post.getUrl() }}" class="readmore">阅读全文</a> | <a href="{{ post.getUrl() }}#cmt" class="cmt">评论 <span class="count">{{ post.comment_count }}</span></a></div>
           </div>
         </li>
         {% endfor %}

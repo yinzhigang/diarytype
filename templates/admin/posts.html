@@ -31,7 +31,7 @@
             <td>{{ post.title|e }}</td>
             <td>{{ post.date|date('%Y-%m-%d %H:%M') }}</td>
             <td class="action">
-              <a href="#" class="view">查看</a>
+              <a href="{{ post.getUrl() }}" target="_blank" class="view">查看</a>
               <a href="/admin/post/edit/{{ post.key().id() }}" class="edit">修改</a>
               <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  post.key().id() }}';return false;" class="delete">删除</a>
             </td>

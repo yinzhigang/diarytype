@@ -16,3 +16,4 @@ class ThemeFile(db.Model):
     filename = db.StringProperty(multiline=False)
     filetype = db.StringProperty(choices=['template', 'file'])
     filecontent = db.BlobProperty()
+    created = db.DateTimeProperty(auto_now=True)

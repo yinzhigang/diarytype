@@ -12,15 +12,17 @@ class dashboard(object):
     """后台管理首页"""
     @requires_admin
     def GET(self):
-        pass
+        web.found('/admin/setting')
 
 class setting(object):
     @requires_admin
     def GET(self):
         """系统设置表单"""
+        import pytz
+        common_timezones = pytz.common_timezones
         blog = Blog.get()
         
-        return render('admin/setting.html',blog=blog)
+        return render('admin/setting.html',blog=blog,timezones=common_timezones)
     
     @requires_admin
     def POST(self):
@@ -30,6 +32,7 @@ class setting(object):
         blog = Blog.get()
         blog.name = inp.name
         blog.description = inp.description
+        blog.timezone = inp.timezone
         blog.custom_header = inp.custom_header
         blog.update()
         
