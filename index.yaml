@@ -33,7 +33,7 @@ indexes:
 
 - kind: ThemeFile
   properties:
-  - name: theme
+  - name: theme_name
   - name: filename
   - name: filetype
 

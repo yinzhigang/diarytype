@@ -1,8 +1,6 @@
-info:
-    author: innocent_sin
-    homepage: http://www.diarytype.org/
-    description: A simple theme for default
+name: default
+author: innocent_sin
+homepage: http://www.diarytype.org/
+description: A simple theme for default
 
-theme:
-    sidebar: 1
-    
+sidebar: 1

@@ -43,7 +43,7 @@ try:
 except NameError:
     from sets import Set as set
 
-
+zoneinfo_cache = {}
 def open_resource(name):
     """Open a resource from the zoneinfo subdir for reading.
 
@@ -70,12 +70,14 @@ def open_resource(name):
     for part in name_parts:
         if part == os.path.pardir or os.path.sep in part:
             raise ValueError('Bad path segment: %r' % part)
-    cache_key="zoneinfo:%s:%s" % (OLSON_VERSION, name)
-    zonedata=memcache.get(cache_key)
+    cache_key = "zoneinfo:%s:%s" % (OLSON_VERSION, name)
+    zonedata = memcache.get(cache_key)
     if zonedata is None:
-        zoneinfo = zipfile.ZipFile(os.path.join(os.path.dirname(__file__),
-            'zoneinfo.zip'))
-        zonedata=zoneinfo.read(os.path.join('zoneinfo', *name_parts).replace('\\','/'))
+        zoneinfo = zoneinfo_cache.get('cache')
+        if not zoneinfo:
+            zoneinfo = zipfile.ZipFile(os.path.join(os.path.dirname(__file__),
+                'zoneinfo.zip'))
+        zonedata = zoneinfo.read(os.path.join('zoneinfo', *name_parts).replace('\\','/'))
         memcache.add(cache_key, zonedata)
     return StringIO(zonedata)
 

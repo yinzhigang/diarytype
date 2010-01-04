@@ -6,14 +6,17 @@ class Theme(db.Model):
     """模板存储"""
     name = db.StringProperty()
     description = db.TextProperty()
+    author = db.StringProperty()
+    homepage = db.StringProperty()
     config = db.TextProperty()
     screenshot = db.BlobProperty()
-    author = db.StringProperty()
+    sidebar = db.IntegerProperty(default=1)
 
 class ThemeFile(db.Model):
     """模板文件"""
-    theme = db.ReferenceProperty(Theme)
+    # theme = db.ReferenceProperty(Theme)
+    theme_name = db.StringProperty()
     filename = db.StringProperty(multiline=False)
     filetype = db.StringProperty(choices=['template', 'file'])
     filecontent = db.BlobProperty()
-    created = db.DateTimeProperty(auto_now=True)
+    modified = db.DateTimeProperty()
