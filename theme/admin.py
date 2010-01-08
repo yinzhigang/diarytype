@@ -30,12 +30,15 @@ class theme(object):
         default_theme = Theme.get_by_key_name('default')
         if not default_theme:
             default_theme = Theme(key_name=config.get("name"))
-        # default_theme.name = config.get("name")
-        # default_theme.author = config.get("author")
-        # default_theme.homepage = config.get("homepage")
-        # default_theme.description = config.get("description")
-        # default_theme.sidebar = config.get("sidebar")
-        
+        default_theme.name = config.get("name")
+        default_theme.author = config.get("author")
+        default_theme.homepage = config.get("homepage")
+        default_theme.description = config.get("description")
+        default_theme.sidebar = config.get("sidebar")
+        screenshot = fileinfo.read('screenshot.png')
+        default_theme.screenshot = screenshot
+        default_theme.save()
+                
         for i in fileinfo.infolist():
             filename = i.filename
             if filename.endswith('/') or \
@@ -61,9 +64,6 @@ class theme(object):
             
             theme_file.save()
         
-        # screenshot = fileinfo.read('screenshot.png')
-        # default_theme.screenshot = screenshot
-        # default_theme.save()
         return config
 
 class init_widget(object):

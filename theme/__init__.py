@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import web
 
 import binascii
@@ -20,15 +19,21 @@ class theme_file(object):
         if not mime_type:
             mime_type = 'application/octet-stream'
         
-        theme_file_query = ThemeFile.all().filter('theme_name =', theme)
-        theme_file_query.filter('filename =', filename)
-        theme_file_query.filter('filetype =', 'file')
-        f = theme_file_query.get()
+        memcache_key = 'theme:%s:%s' % (theme, filename)
+        body = memcache.get(memcache_key)
         
-        if not theme_file:
-            raise web.notfound()
-        
-        body = str(f.filecontent)
+        if not body:
+            theme_file_query = ThemeFile.all().filter('theme_name =', theme)
+            theme_file_query.filter('filename =', filename)
+            theme_file_query.filter('filetype =', 'file')
+            f = theme_file_query.get()
+            
+            if not f:
+                raise web.notfound()
+            
+            body = str(f.filecontent)
+            memcache.set(memcache_key, body)
+            
         etag = str(binascii.crc32(body))
         self.SetCacheHeader(etag)
         
@@ -65,4 +70,5 @@ class theme_file(object):
         web.header('Expires', email.Utils.formatdate(
             time.time() + self.MAX_AGE, usegmt=True))
         web.header('Cache-Control', 'public, max-age=%d' % self.MAX_AGE)
-        web.header('ETag', etag)
+        if etag:
+            web.header('ETag', etag)

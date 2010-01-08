@@ -20,13 +20,9 @@ import wsgiref
 
 import settings
 
-app = web.application(settings.urls, globals())
+sys.path = sys.path[0:1] + settings.EXTRA_PATHS + sys.path[1:]
 
-class hello:
-    def GET(self, name):
-        if not name:
-            name = 'world'
-        return 'hello ' + name
+app = web.application(settings.urls, globals())
 
 def real_main():
     wsgiapp = app.wsgifunc()

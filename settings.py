@@ -49,3 +49,7 @@ ROOT = os.path.dirname(__file__)
 
 ADMIN_TEMPLATE_DIR = os.path.join(ROOT, 'templates/admin')
 THEME_TEMPLATE_DIR = os.path.join(ROOT, 'templates/theme')
+
+EXTRA_PATHS = [
+  os.path.join(ROOT, 'pytz.zip'),
+]
