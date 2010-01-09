@@ -22,12 +22,14 @@ class PerformancePrefixLoader(PrefixLoader):
                         .load(environment, name, globals)
         if globals is None:
             globals = {}
-        code = memcache.get('tempelate_' + name)
+        theme = blog.theme
+        memcache_key = 'template_%s_%s' % (theme, name)
+        code = memcache.get(memcache_key)
         if code is None:
             logging.info("oops no memcache!!")
             source, filename, uptodate = self.get_source(environment, name)
             code = environment.compile(source, raw=True)
-            memcache.set('tempelate_' + name, code)
+            memcache.set(memcache_key, code)
             logging.info(name)
         else:
             logging.info("yeh memcache")
@@ -35,7 +37,7 @@ class PerformancePrefixLoader(PrefixLoader):
         code = compile(code, name, 'exec')
         return environment.template_class.from_code(environment, code,
                                                     globals, uptodate)
-    
+
 def load_theme(name):
     """加载自定义模板,优先扫描数据库数据,而后扫描本地文件"""
     theme = blog.theme

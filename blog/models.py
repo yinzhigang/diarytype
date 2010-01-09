@@ -35,7 +35,6 @@ class Blog(db.Model):
     def update(self):
         """更新博客信息并清除缓存"""
         memcache.delete('blog_info')
-        cache['blog'] = self
         self.save()
 
 blog = Blog.get()

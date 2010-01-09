@@ -1,0 +1,64 @@
+{% extends "admin/layout.html" %}
+{% block title %} 模板管理 {% endblock %}
+{% set theme_active = 'active' %}
+
+{% block header %}
+<link href="/static/admin/css/theme.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/theme" class="active">模板管理</a></li>
+        <li><a href="/admin/theme/widget">模板装饰</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/theme" class="active">模板管理</a></h2>
+
+    <div id="main">
+      <h3>模板管理</h3>
+      
+    	<div class="themePickerList">
+      	<ul class="themePickerList01">
+      	  {% for theme in themes %}
+        	<li>
+          	<div class="thumbs">
+            	<div class="pic">
+            	  <a href="#" onmouseover="$(this).next('.themeTag').show();" onmouseout="$(this).next('.themeTag').hide();"><img src="/admin/theme/screenshot/{{ theme.name }}" /></a>
+            	  <div class="themeTag" onmouseover="$(this).show();" onmouseout="$(this).hide();">
+                  <p>作者：{{ theme.author }}</p>
+                  <p>{{ theme.description }}</p>
+                </div>
+              </div>
+              <div class="themeAction">
+              	<h5>{{ theme.name }}</h5>
+              	<p>
+              	  {% if theme.name == use_theme %}
+              	  使用中 |
+              	  {% else %}
+              	  <a href="/admin/theme/change/{{ theme.name }}">启用</a> |
+              	  {% endif %}
+                  <!-- <a href="#">预览</a> | -->
+              	  <a href="#">编辑</a> |
+            	    {% if theme.name != 'default' %}
+              	  <a href="#">删除</a>
+              	  {% else %}
+              	  不可删除
+              	  {% endif %}
+              	</p>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

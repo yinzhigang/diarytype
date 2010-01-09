@@ -23,6 +23,8 @@ urls = (
     '/admin/link/delete/(\d+)', 'links.admin.delete',
     
     '/admin/theme', 'theme.admin.theme',
+    '/admin/theme/change/(\w+)', 'theme.admin.change_theme',
+    '/admin/theme/screenshot/(\w+)', 'theme.admin.theme_screenshot',
     '/admin/theme/widget', 'theme.admin.widget',
     '/admin/theme/widget/init', 'theme.admin.init_widget',
     
