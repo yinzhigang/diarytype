@@ -27,20 +27,21 @@ class categories(Widget):
         return u"文章分类"
     
     def body(self):
-        category_list = memcache.get('widget_category_list')
-        if not category_list:
+        content = memcache.get('widget_category_list')
+        if not content:
             category_list = Category.all().order('sort')
-            memcache.set('widget_category_list', category_list)
         
-        content = []
-        write = content.append
-        write('<ul>')
-        for category in category_list:
-            write('<li><a href="%s">%s</a>(%s)</li>' % 
-                    (category.getUrl(), category.name, category.count))
-        write('</ul>')
+            content = []
+            write = content.append
+            write('<ul>')
+            for category in category_list:
+                write('<li><a href="%s">%s</a>(%s)</li>' % 
+                        (category.getUrl(), category.name, category.count))
+            write('</ul>')
+            content = '\n'.join(content)
+            memcache.set('widget_category_list', content)
         
-        return '\n'.join(content)
+        return content
 
 class recent_entries(Widget):
     """最新文章装饰"""
@@ -49,21 +50,22 @@ class recent_entries(Widget):
         return u"最新文章"
     
     def body(self):
-        post_list = memcache.get('widget_post_list')
-        if not post_list:
+        content = memcache.get('widget_post_list')
+        if not content:
             post_list = Post.all().filter('hidden =',False)\
                             .order('-date').fetch(10)
-            memcache.set('widget_post_list', post_list)
         
-        content = []
-        write = content.append
-        write('<ul>')
-        for post in post_list:
-            write('<li><a href="%s">%s</a></li>' %
-                        (post.getUrl(), post.title))
-        write('</ul>')
+            content = []
+            write = content.append
+            write('<ul>')
+            for post in post_list:
+                write('<li><a href="%s">%s</a></li>' %
+                            (post.getUrl(), post.title))
+            write('</ul>')
+            content = '\n'.join(content)
+            memcache.set('widget_post_list', content)
         
-        return '\n'.join(content)
+        return content
 
 class recent_comments(Widget):
     """新新评论"""
@@ -72,22 +74,24 @@ class recent_comments(Widget):
         return u"最新评论"
     
     def body(self):
-        comments = memcache.get('widget_comments')
-        if not comments:
+        content = memcache.get('widget_comments')
+        if not content:
             comments = Comment.all().order('-created').fetch(10)
-            memcache.set('widget_comments', comments)
+            
+            content = []
+            write = content.append
+            write('<ul>')
+            for comment in comments:
+                write("""<li>
+                <span class="author"><a href="%s" target="_blank">%s</a></span>
+                <a href="%s#cmt">%s</a>
+                </li>""" % (comment.homepage, comment.name, 
+                comment.post.getUrl(), comment.content))
+            write('</ul>')
+            content = '\n'.join(content)
+            memcache.set('widget_comments', content)
         
-        content = []
-        write = content.append
-        write('<ul>')
-        for comment in comments:
-            write("""<li>
-            <span class="author"><a href="%s" target="_blank">%s</a></span>
-            <a href="%s#cmt">%s</a>
-            </li>""" % (comment.homepage, comment.name, comment.post.getUrl(), comment.content))
-        write('</ul>')
-        
-        return '\n'.join(content)
+        return content
 
 class hot_tags(Widget):
     """热门Tag云图"""
@@ -96,18 +100,19 @@ class hot_tags(Widget):
         return u"热门Tag"
     
     def body(self):
-        tag_list = memcache.get('widget_tag_list')
-        if not tag_list:
+        content = memcache.get('widget_tag_list')
+        if not content:
             tag_list = Tag.all().order('count').fetch(10)
-            memcache.set('widget_tag_list', tag_list)
+            
+            content = []
+            write = content.append
+            for tag in tag_list:
+                write('<span class=""><a href="%s">%s</a></span>' %
+                        (tag.getUrl(), tag.name))
+            content = '\n'.join(content)
+            memcache.set('widget_tag_list', content)
         
-        content = []
-        write = content.append
-        for tag in tag_list:
-            write('<span class=""><a href="%s">%s</a></span>' %
-                    (tag.getUrl(), tag.name))
-        
-        return '\n'.join(content)
+        return content
 
 class links(Widget):
     """友情链接装饰"""
@@ -116,20 +121,21 @@ class links(Widget):
         return u"友情链接"
     
     def body(self):
-        links = memcache.get('widget_links')
-        if not links:
+        content = memcache.get('widget_links')
+        if not content:
             links = Link.all().order('sort')
-            memcache.set('widget_links', links)
+            
+            content = []
+            write = content.append
+            write('<ul>')
+            for link in links:
+                write('<li><a href="%s" target="_blank">%s</a></li>' %
+                        (link.url, link.name))
+            write('</ul>')
+            content = '\n'.join(content)
+            memcache.set('widget_links', content)
         
-        content = []
-        write = content.append
-        write('<ul>')
-        for link in links:
-            write('<li><a href="%s" target="_blank">%s</a></li>' %
-                    (link.url, link.name))
-        write('</ul>')
-        
-        return '\n'.join(content)
+        return content
 
 class custom_html(Widget):
     """自定义HTML装饰"""

@@ -100,6 +100,8 @@ class edit(object):
                 Tag.add(tag)
         post.save()
         
+        clear_cache()
+        
         raise web.seeother('/admin/posts')
 
 class delete(object):
@@ -109,5 +111,12 @@ class delete(object):
         if post_id:
             post = Post.get_by_id(int(post_id))
             post.delete()
+            
+            clear_cache()
         
         raise web.seeother('/admin/posts')
+
+def clear_cache():
+    """清除分类缓存"""
+    from google.appengine.api import memcache
+    memcache.delete_multi(['widget_post_list', 'widget_tag_list'])

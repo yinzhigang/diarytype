@@ -16,6 +16,7 @@ class categories(object):
         
         return render('admin/categories.html',categories=categories)
     
+    @requires_admin
     def POST(self):
         data = web.data()
         
@@ -25,10 +26,12 @@ class categories(object):
             category.sort = sort
             category.save()
         
+        clear_cache()
         return json.dumps({'status': 'ok'})
 
 class edit(object):
     """分类新增修改"""
+    @requires_admin
     def GET(self, category_id=None):
         category = None
         if category_id:
@@ -39,6 +42,7 @@ class edit(object):
         
         return render('admin/category.html',category=category,title=title)
     
+    @requires_admin
     def POST(self, category_id=None):
         if category_id:
             category = Category.get_by_id(int(category_id))
@@ -59,13 +63,22 @@ class edit(object):
         category.alias = inp.get('alias')
         category.save()
         
+        clear_cache()
         return web.seeother('/admin/categories')
 
 class delete(object):
     """删除分类"""
+    @requires_admin
     def GET(self, category_id=None):
         if category_id:
             category = Category.get_by_id(int(category_id))
             category.delete()
+            
+            clear_cache()
         
         return web.seeother('/admin/categories')
+
+def clear_cache():
+    """清除分类缓存"""
+    from google.appengine.api import memcache
+    memcache.delete_multi(['widget_category_list'])

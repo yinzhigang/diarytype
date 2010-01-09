@@ -23,6 +23,8 @@ class links(object):
             link_id = Link.get_by_id(int(link_id))
             link_id.sort = sort
             link_id.save()
+        
+        clear_cache()
 
         return json.dumps({'status': 'ok'})
 
@@ -61,6 +63,8 @@ class edit(object):
         link.url = url
         link.save()
         
+        clear_cache()
+        
         return web.seeother('/admin/links')
 
 class delete(object):
@@ -69,5 +73,12 @@ class delete(object):
         if link_id:
             link = Link.get_by_id(int(link_id))
             link.delete()
+            
+            clear_cache()
 
         return web.seeother('/admin/links')
+
+def clear_cache():
+    """清除友情链接缓存"""
+    from google.appengine.api import memcache
+    memcache.delete_multi(['widget_links'])
