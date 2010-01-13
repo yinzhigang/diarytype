@@ -21,32 +21,57 @@ class theme(object):
         themes = Theme.all()
         
         return render('admin/theme.html',themes=themes,use_theme=use_theme)
+
+class theme_screenshot(object):
+    """模板缩略图"""
+    @requires_admin
+    def GET(self, name):
+        theme = Theme.get_by_key_name(name)
+        screenshot = str(theme.screenshot)
+        
+        web.header('Content-Type', 'image/png')
+        return screenshot
+
+class change_theme(object):
+    """修改当前使用模板"""
+    @requires_admin
+    def GET(self, name):
+        from util.template import env
+        blog.theme = name
+        blog.update()
+        
+        env.cache.clear()
+        raise web.seeother('/admin/theme')
+
+class install_theme(object):
+    """安装模板"""
+    @requires_admin
+    def GET(self):
+        return render('admin/theme_install.html')
     
     @requires_admin
-    def import_theme(self):
-        import os
+    def POST(self):
         import zipfile
         import datetime
-        from settings import THEME_TEMPLATE_DIR
         
-        zip_filename = os.path.join(THEME_TEMPLATE_DIR, 'RewindCity.zip')
-        fileinfo = zipfile.ZipFile(zip_filename)
-        
+        inp = web.input(theme={})
+        theme_zip = inp.theme
+        fileinfo = zipfile.ZipFile(theme_zip.file)
         config = yaml.load(fileinfo.read('config.yaml'))
         
         theme_name = config.get("name")
-        default_theme = Theme.get_by_key_name(theme_name)
-        if not default_theme:
-            default_theme = Theme(key_name=theme_name)
-        default_theme.name = config.get("name")
-        default_theme.author = config.get("author")
-        default_theme.homepage = config.get("homepage")
-        default_theme.description = config.get("description")
-        default_theme.sidebar = config.get("sidebar")
+        theme = Theme.get_by_key_name(theme_name)
+        if not theme:
+            theme = Theme(key_name=theme_name)
+        theme.name = config.get("name")
+        theme.author = config.get("author")
+        theme.homepage = config.get("homepage")
+        theme.description = config.get("description")
+        theme.sidebar = config.get("sidebar")
         screenshot = fileinfo.read('screenshot.png')
-        default_theme.screenshot = screenshot
-        default_theme.save()
-                
+        theme.screenshot = screenshot
+        theme.save()
+        
         for i in fileinfo.infolist():
             filename = i.filename
             if filename.endswith('/') or \
@@ -71,27 +96,17 @@ class theme(object):
             theme_file.modified = date_time
             theme_file.save()
         
-        return config
+        raise web.seeother('/admin/theme')
 
-class theme_screenshot(object):
-    """模板缩略图"""
-    @requires_admin
+class delete_theme(object):
+    """删除模板"""
     def GET(self, name):
         theme = Theme.get_by_key_name(name)
-        screenshot = str(theme.screenshot)
+        theme_files = ThemeFile.all().filter('theme_name =', name)
+        for theme_file in theme_files:
+            theme_file.delete()
+        theme.delete()
         
-        web.header('Content-Type', 'image/png')
-        return screenshot
-
-class change_theme(object):
-    """修改当前使用模板"""
-    @requires_admin
-    def GET(self, name):
-        from util.template import env
-        blog.theme = name
-        blog.update()
-        
-        env.cache.clear()
         raise web.seeother('/admin/theme')
 
 class init_widget(object):

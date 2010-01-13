@@ -92,6 +92,8 @@ class feed(BaseFront):
                 category = (post.category.name,)
             else:
                 category = ()
+            if post.tags:
+                category = category + tuple(post.tags)
             feed.add_item(title=post.title,
                           link=blog_home + post.getUrl(),
                           description=post.content,

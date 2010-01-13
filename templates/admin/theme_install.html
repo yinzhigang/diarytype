@@ -1,0 +1,35 @@
+{% extends "admin/layout.html" %}
+{% block title %} 模板安装 {% endblock %}
+{% set theme_active = 'active' %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/theme">模板管理</a></li>
+        <li><a href="/admin/theme/install" class="active">安装模板</a></li>
+        <li><a href="/admin/theme/widget">模板装饰</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/theme/install" class="active">安装模板</a></h2>
+
+    <div id="main">
+      <h3>安装模板</h3>
+      
+    	<form action="" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <p><label class="caption">选择文件：</label><input id="id_theme" type="file" class="text-long" name="theme" /></p>
+          <p>使用 .zip 包安装主题<br />
+          如果您有一个 .zip 格式的主题文件，您可以在这里通过上传安装它。</p>
+          <input type="submit" value="现在安装" />
+        </fieldset>
+      </form>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

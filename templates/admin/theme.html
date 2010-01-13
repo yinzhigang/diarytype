@@ -12,6 +12,7 @@
     <div id="sidebar">
       <ul class="sideNav">
         <li><a href="/admin/theme" class="active">模板管理</a></li>
+        <li><a href="/admin/theme/install">安装模板</a></li>
         <li><a href="/admin/theme/widget">模板装饰</a></li>
       </ul>
     </div>
@@ -44,10 +45,10 @@
               	  {% endif %}
                   <!-- <a href="#">预览</a> | -->
               	  <a href="#">编辑</a> |
-            	    {% if theme.name != 'default' %}
-              	  <a href="#">删除</a>
+            	    {% if theme.name in ['default', use_theme] %}
+            	    不可删除
               	  {% else %}
-              	  不可删除
+              	  <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/theme/delete/{{ theme.name }}';return false;">删除</a>
               	  {% endif %}
               	</p>
               </div>
