@@ -2,7 +2,8 @@
 
 import web
 
-import blog.widgets
+# import blog.widgets
+from blog import widgets as blog_widgets
 from blog.models import Blog, Widget, blog
 from theme.models import Theme, ThemeFile
 
@@ -117,7 +118,7 @@ class init_widget(object):
         for widget in widgets:
             widget.delete()
         
-        widget_modules = blog.widgets.default_widgets
+        widget_modules = blog_widgets.default_widgets
         for widget_name in widget_modules:
             widget = Widget(key_name=widget_name)
             widget.name = widget_name
