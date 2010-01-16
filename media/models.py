@@ -12,6 +12,13 @@ class Media(db.Model):
     source = db.BlobProperty()
     created = db.DateTimeProperty(auto_now_add=True)
     
+    @property
+    def blog_key(self):
+        if self.blobstore_key:
+            return self.blobstore_key
+        else:
+            return self.key().id()
+    
     def getSourceUrl(self):
         file_ext = self.name.split('.').pop().lower()
         if self.blobstore_key:

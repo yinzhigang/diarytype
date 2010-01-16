@@ -31,7 +31,7 @@
             	  <a href="{{ media.getSourceUrl() }}" target="_blank"><img src="{{ media.getSmallUrl() }}" /></a>
               </div>
               <div class="themeAction">
-              	<h5>{{ media.name }}(<a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/media/delete/{{ media.blobstore_key }}';return false;">删除</a>)</h5>
+              	<h5>{{ media.name }}(<a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/media/delete/{{ media.blog_key }}';return false;">删除</a>)</h5>
               </div>
             </div>
           </li>

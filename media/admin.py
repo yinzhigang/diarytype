@@ -40,20 +40,19 @@ class upload(object):
         if not isinstance(file_fields, list):
             file_fields = [file_fields]
         
-        
         for field in file_fields:
             media = Media()
             try:
                 blob_info = blobstore.parse_blob_info(field)
                 key = str(blob_info.key())
-            
+                
                 small_img = images.Image(blob_key=key)
                 big_img = images.Image(blob_key=key)
-                media.name = blob_info.filename
+                media.name = blob_info.filename.decode('utf-8')
                 media.blobstore_key = key
             except:
-                source = field.value
-                media.name = field.filename
+                source = field.value.decode('utf-8')
+                media.name = field.filename.decode('utf-8')
                 media.source = source
                 small_img = images.Image(source)
                 big_img = images.Image(source)
@@ -75,12 +74,15 @@ class upload(object):
 class delete(object):
     @requires_admin
     def GET(self, blob_key):
-        media = Media.all().filter('blobstore_key =', blob_key).get()
+        if blob_key.isdigit():
+            media = Media.get_by_id(int(blob_key))
+        else:
+            media = Media.all().filter('blobstore_key =', blob_key).get()
+            blob_info = blobstore.get(blob_key)
+            blob_info.delete()
         if not media:
             raise web.notfound()
         
-        blob_info = blobstore.get(blob_key)
-        blob_info.delete()
         media.delete()
         
         raise web.seeother('/admin/media')
