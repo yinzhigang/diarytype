@@ -76,7 +76,7 @@ top:10px;
 
 .themePickerList01 li .thumbs .pic { position:relative; }
 .themePickerList01 li .thumbs .pic .themeTag { width:196px; position:absolute; bottom:0; left:25px; background: #DEFEE3; opacity:0.7;filter:alpha(opacity=70); padding:4px 2px; line-height:140%; color:#666; display:none; _bottom:60px; _left:0; }
-.themePickerList01 li .thumbs .pic img{ width:200px; height:150px; }
+/*.themePickerList01 li .thumbs .pic img{ width:200px; height:150px; }*/
 .themePickerList01 li .themeAction { margin:5px 0; }
 .themePickerList01 li .themeAction h5 { color:#999; }
 .themePickerList01 li .themeAction p { color:#999; margin-top:5px; }

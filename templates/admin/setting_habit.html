@@ -1,0 +1,38 @@
+{% extends "admin/layout.html" %}
+{% block title %}习惯设置{% endblock %}
+{% set setting_active = 'active' %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/setting">基本设置</a></li>
+        <li><a href="/admin/setting/habit" class="active">习惯设置</a></li>
+        <li><a href="#">导入导出</a></li>
+      </ul>
+    </div>
+    <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">习惯设置</a></h2>
+
+    <div id="main">
+      <h3>习惯设置：</h3>
+      <form action="" method="post">
+        <fieldset>
+          <p><label class="caption">日志分页：</label><input id="id_post_pagesize" type="text" class="text-long" value="{{ blog.post_pagesize }}" name="post_pagesize" /></p>
+          <p><label class="caption">评论分页：</label><input id="id_comment_pagesize" type="text" class="text-long" value="{{ blog.comment_pagesize }}" name="comment_pagesize" /></p>
+          <p><label class="caption">PingBack地址：</label><textarea id="id_ping_sites" name="ping_sites" style="width:500px;height:80px;">{{ blog.ping_sites }}</textarea></p>
+          <p>
+            <label class="caption">评论排序：</label>
+            <select name="comment_sort">
+              <option value="asc"{% if blog.comment_sort == 'asc' %} selected="selected"{% endif %}>正序</option>
+              <option value="desc"{% if blog.comment_sort != 'asc' %} selected="selected"{% endif %}>倒序</option>
+            </select>
+          </p>
+          <input type="submit" value=" 保 存 " />
+        </fieldset>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

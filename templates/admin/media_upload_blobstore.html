@@ -1,0 +1,32 @@
+{% extends "admin/layout.html" %}
+{% block title %} 媒体上传 {% endblock %}
+{% set media_active = 'active' %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/media">媒体管理</a></li>
+        <li><a href="/admin/media/upload" class="active">媒体上传</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/media/upload" class="active">媒体上传</a></h2>
+
+    <div id="main">
+      <h3>媒体上传</h3>
+      
+    	<form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <p><label class="caption">选择文件：</label><input id="id_theme" type="file" class="text-long" name="media" /></p>
+          <input type="submit" value="现在上传" />
+        </fieldset>
+      </form>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

@@ -16,6 +16,9 @@ class Blog(db.Model):
     timezone = db.StringProperty(multiline=False,default='UTC')
     post_pagesize = db.IntegerProperty(default=10)
     comment_pagesize = db.IntegerProperty(default=10)
+    comment_sort = db.StringProperty(multiline=False,default='asc',
+                choices=['asc','desc'])
+    ping_sites = db.TextProperty(default="http://rpc.pingomatic.com/")
     
     @classmethod
     def get(cls):

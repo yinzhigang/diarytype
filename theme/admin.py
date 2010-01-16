@@ -27,9 +27,18 @@ class theme_screenshot(object):
     """模板缩略图"""
     @requires_admin
     def GET(self, name):
+        import binascii
+        
         theme = Theme.get_by_key_name(name)
         screenshot = str(theme.screenshot)
         
+        etag = str(binascii.crc32(screenshot))
+        
+        match = web.ctx.env.get('HTTP_IF_NONE_MATCH')
+        if match and match == etag:
+            raise web.notmodified()
+        
+        web.header('ETag', etag)
         web.header('Content-Type', 'image/png')
         return screenshot
 

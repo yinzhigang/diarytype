@@ -1,0 +1,46 @@
+{% extends "admin/layout.html" %}
+{% block title %} 媒体管理 {% endblock %}
+{% set media_active = 'active' %}
+
+{% block header %}
+<link href="/static/admin/css/theme.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block content %}
+<div id="containerHolder">
+  <div id="container">
+    <div id="sidebar">
+      <ul class="sideNav">
+        <li><a href="/admin/media" class="active">媒体管理</a></li>
+        <li><a href="/admin/media/upload">媒体上传</a></li>
+      </ul>
+    </div>
+
+    <!-- h2 stays for breadcrumbs -->
+    <h2><a href="/admin">Dashboard</a> &raquo; <a href="/admin/media" class="active">媒体管理</a></h2>
+
+    <div id="main">
+      <h3>媒体管理</h3>
+      
+    	<div class="themePickerList">
+      	<ul class="themePickerList01">
+      	  {% for media in media_list %}
+          <li>
+          	<div class="thumbs">
+              <div class="pic">
+            	  <a href="{{ media.getSourceUrl() }}" target="_blank"><img src="{{ media.getSmallUrl() }}" /></a>
+              </div>
+              <div class="themeAction">
+              	<h5>{{ media.name }}(<a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/media/delete/{{ media.blobstore_key }}';return false;">删除</a>)</h5>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

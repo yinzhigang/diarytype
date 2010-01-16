@@ -4,7 +4,7 @@ import web
 
 from blog.base_front import BaseFront
 
-from blog.models import Blog
+from blog.models import Blog, blog
 from post.models import Post, Tag
 from category.models import Category
 from comment.models import Comment
@@ -21,7 +21,7 @@ class posts(BaseFront):
         bookmark = inp.get('bookmark')
         
         query = PagerQuery(Post).filter('hidden =',False).order('-date')
-        prev, posts, next = query.fetch(PAGE_SIZE, bookmark)
+        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
         
         return render('theme/index.html',posts=posts,prev=prev,next=next)
 
@@ -39,7 +39,7 @@ class category_post(BaseFront):
         query = PagerQuery(Post).filter('hidden =', False)
         query.filter('category =', category)
         query.order('-date')
-        prev, posts, next = query.fetch(PAGE_SIZE, bookmark)
+        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
         
         return render('theme/index.html',posts=posts,prev=prev,next=next)
 
@@ -54,7 +54,7 @@ class tag_post(BaseFront):
         query = PagerQuery(Post).filter('hidden =', False)
         query.filter('tags =', tag_name)
         query.order('-date')
-        prev, posts, next = query.fetch(PAGE_SIZE, bookmark)
+        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
         
         return render('theme/index.html',posts=posts,prev=prev,next=next)
 
@@ -70,7 +70,13 @@ class show(BaseFront):
         check = "%s%s" % (fullpath, post.key())
         checksum = hashlib.sha1(check).hexdigest()
         
-        comments = Comment.all().filter('post =', post).order('-created').fetch(10)
+        comments_query = Comment.all().filter('post =', post)
+        if blog.comment_sort == 'asc':
+            comments_query.order('created')
+        else:
+            comments_query.order('-created')
+        
+        comments = comments_query.fetch(blog.comment_pagesize)
         
         return render('theme/show.html',post=post,checksum=checksum,comments=comments)
 

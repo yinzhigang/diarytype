@@ -38,6 +38,24 @@ class setting(object):
         
         raise web.seeother('/admin/setting')
 
+class habit(object):
+    """习惯设置"""
+    def GET(self):
+        blog = Blog.get()
+        return render('admin/setting_habit.html',blog=blog)
+    
+    def POST(self):
+        inp = web.input()
+        
+        blog = Blog.get()
+        blog.post_pagesize = int(inp.post_pagesize)
+        blog.comment_pagesize = int(inp.comment_pagesize)
+        blog.comment_sort = inp.comment_sort
+        blog.ping_sites = inp.ping_sites
+        blog.update()
+        
+        raise web.seeother('/admin/setting/habit')
+
 class clear_cache(object):
     """清除memcache缓存"""
     @requires_admin

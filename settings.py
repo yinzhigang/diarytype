@@ -10,6 +10,10 @@ urls = (
     '/admin/post/edit/(\d+)', 'post.admin.edit',
     '/admin/post/delete/(\d+)', 'post.admin.delete',
     
+    '/admin/media', 'media.admin.media_list',
+    '/admin/media/upload', 'media.admin.upload',
+    '/admin/media/delete/(.*)', 'media.admin.delete',
+    
     '/admin/comments', 'comment.admin.comments',
     
     '/admin/categories', 'category.admin.categories',
@@ -31,18 +35,17 @@ urls = (
     '/admin/theme/widget/init', 'theme.admin.init_widget',
     
     '/admin/setting', 'blog.admin.setting',
+    '/admin/setting/habit', 'blog.admin.habit',
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
     
     '/feed', 'post.feed',
-    
     '/comment', 'comment.comment',
-    
     '/theme/(\w+)/(.+)', 'theme.theme_file',
-    
     '/category/(.*)', 'post.category_post',
+    '/media/source/(.*)\..*', 'media.media_source',
+    '/media/(.+)/(.*)\..*', 'media.media_thumb',
     '/tag/(.*)', 'post.tag_post',
-    
     '/', 'post.posts',
     '/post/(\d+)', 'post.show',
 )
