@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Install Diary Type</title>
+</head>
+
+<body style="text-align: center;">
+<form action="" method="post">
+  <table border="0" cellspacing="5" cellpadding="5" align="center">
+    <tr><td>博客名称</td><td><input type="text" name="name" value="{{ blog.name }}" /></td></tr>
+    <tr><td>博客介绍</td><td><textarea name="description" rows="8" cols="40">{{ blog.description }}</textarea></td></tr>
+    <tr>
+      <td>时区</td>
+      <td>
+        <select name="timezone">
+          {% for timezone in timezones %}
+          <option value="{{ timezone }}"{% if blog.timezone == timezone %} selected="selected"{% endif %}>{{ timezone }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+  </table>  
+
+  <p><input type="submit" value="Continue &rarr;"></p>
+</form>
+</body>

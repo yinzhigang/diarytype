@@ -19,6 +19,7 @@ class Blog(db.Model):
     comment_sort = db.StringProperty(multiline=False,default='asc',
                 choices=['asc','desc'])
     ping_sites = db.TextProperty(default="http://rpc.pingomatic.com/")
+    version = db.StringProperty()
     
     @classmethod
     def get(cls):
@@ -58,3 +59,8 @@ class Widget(db.Model):
             cls = getattr(mod, cls)
             self._item = cls(params)
         return self._item
+
+from settings import VERSION
+import web
+if VERSION != blog.version and web.ctx.fullpath != '/admin/install':
+    raise web.found('/admin/install')

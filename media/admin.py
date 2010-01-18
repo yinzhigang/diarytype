@@ -51,7 +51,7 @@ class upload(object):
                 media.name = blob_info.filename.decode('utf-8')
                 media.blobstore_key = key
             except:
-                source = field.value.decode('utf-8')
+                source = field.value
                 media.name = field.filename.decode('utf-8')
                 media.source = source
                 small_img = images.Image(source)

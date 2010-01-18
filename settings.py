@@ -2,7 +2,11 @@
 
 import os
 
+VERSION = '0.1.0'
+
 urls = (
+    '/admin/install', 'blog.admin.install',
+    
     '/admin/?', 'blog.admin.dashboard',
     
     '/admin/posts', 'post.admin.posts',
