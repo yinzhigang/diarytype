@@ -43,6 +43,8 @@ urls = (
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
     
+    '/task/ping_sites', 'post.admin.ping_sites',
+    
     '/feed', 'post.feed',
     '/comment', 'comment.comment',
     '/theme/(\w+)/(.+)', 'theme.theme_file',

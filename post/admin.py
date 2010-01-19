@@ -3,6 +3,7 @@
 import web
 from datetime import datetime
 
+from blog.models import Blog, blog
 from post.models import Post, Tag
 from category.models import Category
 from util.template import render
@@ -46,7 +47,6 @@ class edit(object):
     def POST(self, post_id=None):
         """保存日志信息"""
         import pytz
-        from blog.models import blog
         
         if post_id:
             post = Post.get_by_id(int(post_id))
@@ -102,6 +102,12 @@ class edit(object):
         
         clear_cache()
         
+        from google.appengine.api.labs import taskqueue
+        queue = taskqueue.Queue()
+        url = '/task/ping_sites'
+        ping_task = taskqueue.Task(countdown=5, url=url)
+        queue.add(ping_task)
+        
         raise web.seeother('/admin/posts')
 
 class delete(object):
@@ -120,3 +126,32 @@ def clear_cache():
     """清除分类缓存"""
     from google.appengine.api import memcache
     memcache.delete_multi(['widget_post_list', 'widget_tag_list'])
+
+class ping_sites(object):
+    """更新通知"""
+    def GET(self):
+        import xmlrpclib
+        import logging
+        if blog.ping_sites:
+            sites = blog.ping_sites.split('\n')
+            for site in sites:
+                site = site.strip()
+                logging.info(site)
+                name = blog.name
+                home = web.ctx.home
+                feed = web.ctx.home + '/feed'
+                xmlrpc = xmlrpclib.Server(site)
+                try:
+                    s = xmlrpc.weblogUpdates.extendedPing(name, home, feed)
+                    logging.info(s)
+                except:
+                    logging.info('not ext ping')
+                    try:
+                        xmlrpc.weblogUpdates.ping(name, home)
+                    except:
+                        logging.info('except')
+        
+        return 'ok'
+    
+    def POST(self):
+        return self.GET()

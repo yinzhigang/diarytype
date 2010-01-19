@@ -25,6 +25,10 @@ handlers:
 - url: /tinymce/.*
   script: $PYTHON_LIB/google/appengine/ext/zipserve
 
+- url: /task/.*
+  script: main.py
+  login: admin
+
 - url: .*
   script: main.py
 
