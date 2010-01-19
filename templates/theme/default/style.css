@@ -14,7 +14,7 @@ ul { list-style:none; }
 
 .clear { clear:both; }
 
-#container { margin:auto; width:66.6em; text-align:left; font-size:1.2em; }
+#container { margin:auto; width:85em; text-align:left; font-size:1.2em; }
 
 #header h1 { padding:.2em 0 0 3em; height:2.5em; background:url(images/blog_name_bg.gif) no-repeat .2em .1em; font-family:Arial, sans-serif; font-weight:normal; font-size:1.5em; }
 
@@ -42,9 +42,9 @@ ul { list-style:none; }
 
 #header #cats .count { display:none; }
 
-#innerContainer { background:url(images/line_dotted_bg.gif) repeat-y scroll 47em 0; zoom:1; }
+#innerContainer { background:url(images/line_dotted_bg.gif) repeat-y scroll 66em 0; zoom:1; }
 
-#content { padding-top:1.5em; width:45.5em; padding-left:.2em; float:left; }
+#content { padding-top:1.5em; width:65em; padding-left:.2em; float:left; }
 
 #content h2 { font-size:1.4em; font-weight:normal; letter-spacing:.1em; vertical-align:middle; }
 
