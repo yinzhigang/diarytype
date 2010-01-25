@@ -48,11 +48,11 @@ class Tag(db.Model):
     def add(cls, name):
         """新增Tag"""
         if name:
-            tag= Tag.get_by_key_name(name)
+            tag = cls.get_by_key_name(name)
             if not tag:
-                tag=Tag(key_name=name)
+                tag = cls(key_name=name)
                 tag.name = name
-
+            
             tag.count += 1
             tag.save()
             return tag

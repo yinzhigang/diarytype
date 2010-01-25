@@ -40,6 +40,7 @@ urls = (
     
     '/admin/setting', 'blog.admin.setting',
     '/admin/setting/habit', 'blog.admin.habit',
+    '/admin/setting/permalink', 'blog.admin.permalink',
     '/admin/setting/clear_cache', 'blog.admin.clear_cache',
     '/admin/import', 'blog.admin.import_wordpress',
     
@@ -53,7 +54,8 @@ urls = (
     '/media/(.+)/(.*)\..*', 'media.media_thumb',
     '/tag/(.*)', 'post.tag_post',
     '/', 'post.posts',
-    '/post/(\d+)', 'post.show',
+    '.*/(.+)', 'post.show',
+#    '/post/(\d+)', 'post.show',
 )
 
 DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')

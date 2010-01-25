@@ -60,8 +60,9 @@ class tag_post(BaseFront):
 
 class show(BaseFront):
     """显示单篇日志"""
-    def GET(self, post_id):
+    def GET(self, post_url=None):
         import hashlib
+        post_id = post_url
         post = Post.get_by_id(int(post_id))
         if not post:
             raise web.notfound()
@@ -78,7 +79,10 @@ class show(BaseFront):
         
         comments = comments_query.fetch(blog.comment_pagesize)
         
-        return render('theme/show.html',post=post,checksum=checksum,comments=comments)
+        return render('theme/show.html',
+                      post=post,
+                      checksum=checksum,
+                      comments=comments)
 
 class feed(BaseFront):
     """种子输出"""

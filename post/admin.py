@@ -125,7 +125,8 @@ class delete(object):
 def clear_cache():
     """清除分类缓存"""
     from google.appengine.api import memcache
-    memcache.delete_multi(['widget_post_list', 'widget_tag_list'])
+    memcache.delete_multi(['widget_post_list', 'widget_tag_list',
+                           'widget_category_list'])
 
 class ping_sites(object):
     """更新通知"""
@@ -147,7 +148,8 @@ class ping_sites(object):
                 except:
                     logging.info('not ext ping')
                     try:
-                        xmlrpc.weblogUpdates.ping(name, home)
+                        s = xmlrpc.weblogUpdates.ping(name, home)
+                        logging.info(s)
                     except:
                         logging.info('except')
         

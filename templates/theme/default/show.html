@@ -35,13 +35,7 @@
         <h2>评论</h2>
         {% for comment in comments %}
         <li>
-          <div class='cmtBody'>{{ comment.content|e }}</div>
-          <!-- <div class="reCmtBody">
-            <div><span class="author">innocent_sin</span>回复<span>eva</span>说：</div>
-            <div class="content">呃 380的是另一张。带DVD...<br />
-              我承认我那天没注意穿衣打扮，您别在意。顺杯子没什么不好，谁让他们一杯可乐卖20... 以后早点睡吧。我担心您身体，还有一半的路要一起走的。</div>
-            <div class="time">2009-11-29 18:55:03</div>
-          </div> -->
+          <div class='cmtBody'>{{ comment.content }}</div>
           <div class='menubar'><span class='author'>{{ comment.name }} | </span> 发表于<span class='time'>{{ comment.created|date('%Y-%m-%d %H:%M:%S') }}</span> <!-- <span>[<a href="#" onclick="#" rel="facebox">回复</a>]</span> --></div>
         </li>
         {% endfor %}

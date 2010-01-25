@@ -15,21 +15,27 @@ class BaseFront(object):
 
 class Processor(object):
     """处理前台变量"""
+    # @type blog Blog
+    blog = None
+    def __init__(self):
+        self.blog = Blog.get()
+    
     @property
     def info(self):
-        return Blog.get()
+        return self.blog
     
     def __getattr__(self, name):
         """获取博客属性"""
-        blog = Blog.get()
-        return getattr(blog, name)
+        return getattr(self.blog, name)
     
     def header(self):
         """前台博客通用Header"""
         home = web.ctx.home
         header = []
-        header.append('<link rel="alternate" type="application/rss+xml" href="%s/feed" />' % home)
-        header.append(self.custom_header)
+        write = header.append
+        write('<meta name="generator" content="DiaryType %s" />' % self.version)
+        write('<link rel="alternate" type="application/rss+xml" href="%s/feed" />' % home)
+        write(self.custom_header)
         
         return '\n'.join(header)
     
@@ -37,7 +43,7 @@ class Processor(object):
         """侧边条应用"""
         number = unicode(number)
         
-        blog = Blog.get()
+        blog = self.blog
         if blog.theme_widget:
             theme_widget = json.loads(blog.theme_widget)
             

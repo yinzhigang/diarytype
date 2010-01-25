@@ -71,7 +71,16 @@ class upload(object):
         
         raise web.seeother('/admin/media')
 
+class pop(object):
+    """媒体弹出窗口"""
+    @requires_admin
+    def GET(self):
+        media_list = Media.all().order('-created')
+
+        return render('admin/media_pop.html', media_list=media_list)
+
 class delete(object):
+    """删除媒体文件"""
     @requires_admin
     def GET(self, blob_key):
         if blob_key.isdigit():

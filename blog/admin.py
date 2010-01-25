@@ -58,6 +58,12 @@ class habit(object):
         
         raise web.seeother('/admin/setting/habit')
 
+class permalink(object):
+    """固定链接设置"""
+    def GET(self):
+        blog = Blog.get()
+        return render('admin/setting_permalink.html', blog=blog)
+
 class install(object):
     """系统安装"""
     @requires_admin

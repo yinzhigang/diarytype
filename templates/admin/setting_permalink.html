@@ -1,0 +1,30 @@
+{% extends "admin/layout.html" %}
+{% block title %}固定链接{% endblock %}
+{% set setting_active = 'active' %}
+
+{% block content %}
+{% set permalink = 'active' %}
+<div id="containerHolder">
+  <div id="container">
+    {% include "admin/sidebar/setting.html" %}
+    <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">固定链接</a></h2>
+
+    <div id="main">
+      <h3>固定链接：</h3>
+      <form action="" method="post">
+        <fieldset>
+          <legend></legend>
+          <ul>
+              <li><label><input type="radio" name="permalink" value="" />默认： /post/123</label></li>
+              <li><label><input type="radio" name="permalink" value="" />日期文章名： /2010/01/25/post-name</label></li>
+              <li><label><input type="radio" name="permalink" value="" />月份文章名： /2010/01/post-name</label></li>
+          </ul>
+          <p></p>
+          <input type="submit" value=" 保 存 " />
+        </fieldset>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %}

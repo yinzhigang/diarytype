@@ -3,15 +3,10 @@
 {% set setting_active = 'active' %}
 
 {% block content %}
+{% set habit = 'active' %}
 <div id="containerHolder">
   <div id="container">
-    <div id="sidebar">
-      <ul class="sideNav">
-        <li><a href="/admin/setting">基本设置</a></li>
-        <li><a href="/admin/setting/habit" class="active">习惯设置</a></li>
-        <li><a href="#">导入导出</a></li>
-      </ul>
-    </div>
+    {% include "admin/sidebar/setting.html" %}
     <h2><a href="#">Dashboard</a> &raquo; <a href="#" class="active">习惯设置</a></h2>
 
     <div id="main">

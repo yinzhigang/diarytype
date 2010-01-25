@@ -19,6 +19,7 @@ class Blog(db.Model):
     comment_sort = db.StringProperty(multiline=False,default='asc',
                 choices=['asc','desc'])
     ping_sites = db.TextProperty(default="http://rpc.pingomatic.com/")
+    permalink = db.StringProperty(multiline=False,default='/post/%post_id%')
     version = db.StringProperty()
     
     @classmethod
