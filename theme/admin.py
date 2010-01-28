@@ -110,6 +110,7 @@ class install_theme(object):
 
 class delete_theme(object):
     """删除模板"""
+    @requires_admin
     def GET(self, name):
         theme = Theme.get_by_key_name(name)
         theme_files = ThemeFile.all().filter('theme_name =', name)

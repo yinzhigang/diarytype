@@ -43,8 +43,15 @@ class comment(object):
         comment.homepage = homepage
         comment.content = content
         comment.save()
+
+        clear_cache()
         
         post.comment_count = post.comment_count + 1
         post.save()
         
         raise web.seeother(referer + '#cmt')
+
+def clear_cache():
+    """清除友情链接缓存"""
+    from google.appengine.api import memcache
+    memcache.delete_multi(['widget_comments'])

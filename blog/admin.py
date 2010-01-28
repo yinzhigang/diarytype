@@ -60,6 +60,7 @@ class habit(object):
 
 class permalink(object):
     """固定链接设置"""
+    @requires_admin
     def GET(self):
         blog = Blog.get()
         return render('admin/setting_permalink.html', blog=blog)

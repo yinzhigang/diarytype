@@ -19,6 +19,7 @@ urls = (
     '/admin/media/delete/(.*)', 'media.admin.delete',
     
     '/admin/comments', 'comment.admin.comments',
+    '/admin/comment/delete/(\d+)', 'comment.admin.delete',
     
     '/admin/categories', 'category.admin.categories',
     '/admin/category/new', 'category.admin.edit',

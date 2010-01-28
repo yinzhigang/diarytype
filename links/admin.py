@@ -10,6 +10,7 @@ import simplejson as json
 
 class links(object):
     """友情链接管理"""
+    @requires_admin
     def GET(self):
         links = Link.all().order('sort')
         
@@ -30,6 +31,7 @@ class links(object):
 
 class edit(object):
     """新增修改友情链接"""
+    @requires_admin
     def GET(self, link_id=None):
         link = None
         if link_id:
@@ -39,7 +41,8 @@ class edit(object):
             title = u'新增友情链接'
         
         return render('admin/link.html',link=link,title=title)
-    
+
+    @requires_admin
     def POST(self, link_id=None):
         if link_id:
             link = Link.get_by_id(int(link_id))
@@ -69,6 +72,7 @@ class edit(object):
 
 class delete(object):
     """删除友情链接"""
+    @requires_admin
     def GET(self, link_id=None):
         if link_id:
             link = Link.get_by_id(int(link_id))

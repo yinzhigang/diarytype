@@ -33,7 +33,7 @@
             <td>{{ comment.content|e }}</td>
             <td class="action">
               <a href="/admin/comment/replay/{{ comment.key().id() }}" class="edit">回复</a>
-              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/post/delete/{{  comment.key().id() }}';return false;" class="delete">删除</a>
+              <a href="#" onclick="if (confirm('确认删除吗？')) window.location.href='/admin/comment/delete/{{  comment.key().id() }}';return false;" class="delete">删除</a>
             </td>
           </tr>
           {%- endfor %}
