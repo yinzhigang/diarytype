@@ -5,7 +5,7 @@
 
     Bundled jinja filters.
 
-    :copyright: (c) 2009 by the Jinja Team.
+    :copyright: (c) 2010 by the Jinja Team.
     :license: BSD, see LICENSE for more details.
 """
 import re
@@ -25,9 +25,18 @@ def contextfilter(f):
     """Decorator for marking context dependent filters. The current
     :class:`Context` will be passed as first argument.
     """
-    if getattr(f, 'environmentfilter', False):
-        raise TypeError('filter already marked as environment filter')
     f.contextfilter = True
+    return f
+
+
+def evalcontextfilter(f):
+    """Decorator for marking eval-context dependent filters.  An eval
+    context object is passed as first argument.  For more information
+    about the eval context, see :ref:`eval-context`.
+
+    .. versionadded:: 2.4
+    """
+    f.evalcontextfilter = True
     return f
 
 
@@ -35,8 +44,6 @@ def environmentfilter(f):
     """Decorator for marking evironment dependent filters.  The current
     :class:`Environment` is passed to the filter as first argument.
     """
-    if getattr(f, 'contextfilter', False):
-        raise TypeError('filter already marked as context filter')
     f.environmentfilter = True
     return f
 
@@ -48,8 +55,8 @@ def do_forceescape(value):
     return escape(unicode(value))
 
 
-@environmentfilter
-def do_replace(environment, s, old, new, count=None):
+@evalcontextfilter
+def do_replace(eval_ctx, s, old, new, count=None):
     """Return a copy of the value with all occurrences of a substring
     replaced with a new one. The first argument is the substring
     that should be replaced, the second is the replacement string.
@@ -66,7 +73,7 @@ def do_replace(environment, s, old, new, count=None):
     """
     if count is None:
         count = -1
-    if not environment.autoescape:
+    if not eval_ctx.autoescape:
         return unicode(s).replace(unicode(old), unicode(new), count)
     if hasattr(old, '__html__') or hasattr(new, '__html__') and \
        not hasattr(s, '__html__'):
@@ -86,8 +93,8 @@ def do_lower(s):
     return soft_unicode(s).lower()
 
 
-@environmentfilter
-def do_xmlattr(_environment, d, autospace=True):
+@evalcontextfilter
+def do_xmlattr(_eval_ctx, d, autospace=True):
     """Create an SGML/XML attribute string based on the items in a dict.
     All values that are neither `none` nor `undefined` are automatically
     escaped:
@@ -117,7 +124,7 @@ def do_xmlattr(_environment, d, autospace=True):
     )
     if autospace and rv:
         rv = u' ' + rv
-    if _environment.autoescape:
+    if _eval_ctx.autoescape:
         rv = Markup(rv)
     return rv
 
@@ -169,10 +176,13 @@ def do_dictsort(value, case_sensitive=False, by='key'):
     return sorted(value.items(), key=sort_func)
 
 
-def do_sort(value, case_sensitive=False):
-    """Sort an iterable.  If the iterable is made of strings the second
-    parameter can be used to control the case sensitiveness of the
-    comparison which is disabled by default.
+def do_sort(value, reverse=False, case_sensitive=False):
+    """Sort an iterable.  Per default it sorts ascending, if you pass it
+    true as first argument it will reverse the sorting.
+
+    If the iterable is made of strings the third parameter can be used to
+    control the case sensitiveness of the comparison which is disabled by
+    default.
 
     .. sourcecode:: jinja
 
@@ -187,7 +197,7 @@ def do_sort(value, case_sensitive=False):
             return item
     else:
         sort_func = None
-    return sorted(seq, key=sort_func)
+    return sorted(value, key=sort_func, reverse=reverse)
 
 
 def do_default(value, default_value=u'', boolean=False):
@@ -212,8 +222,8 @@ def do_default(value, default_value=u'', boolean=False):
     return value
 
 
-@environmentfilter
-def do_join(environment, value, d=u''):
+@evalcontextfilter
+def do_join(eval_ctx, value, d=u''):
     """Return a string which is the concatenation of the strings in the
     sequence. The separator between elements is an empty string per
     default, you can define it with the optional parameter:
@@ -227,7 +237,7 @@ def do_join(environment, value, d=u''):
             -> 123
     """
     # no automatic escaping?  joining is a lot eaiser then
-    if not environment.autoescape:
+    if not eval_ctx.autoescape:
         return unicode(d).join(imap(unicode, value))
 
     # if the delimiter doesn't have an html representation we check
@@ -309,8 +319,8 @@ def do_pprint(value, verbose=False):
     return pformat(value, verbose=verbose)
 
 
-@environmentfilter
-def do_urlize(environment, value, trim_url_limit=None, nofollow=False):
+@evalcontextfilter
+def do_urlize(eval_ctx, value, trim_url_limit=None, nofollow=False):
     """Converts URLs in plain text into clickable links.
 
     If you pass the filter an additional integer it will shorten the urls
@@ -323,7 +333,7 @@ def do_urlize(environment, value, trim_url_limit=None, nofollow=False):
             links are shortened to 40 chars and defined with rel="nofollow"
     """
     rv = urlize(value, trim_url_limit, nofollow)
-    if environment.autoescape:
+    if eval_ctx.autoescape:
         rv = Markup(rv)
     return rv
 
@@ -531,29 +541,24 @@ def do_round(value, precision=0, method='common'):
     .. sourcecode:: jinja
 
         {{ 42.55|round }}
-            -> 43
+            -> 43.0
         {{ 42.55|round(1, 'floor') }}
             -> 42.5
+
+    Note that even if rounded to 0 precision, a float is returned.  If
+    you need a real integer, pipe it through `int`:
+
+    .. sourcecode:: jinja
+
+        {{ 42.55|round|int }}
+            -> 43
     """
     if not method in ('common', 'ceil', 'floor'):
         raise FilterArgumentError('method must be common, ceil or floor')
-    if precision < 0:
-        raise FilterArgumentError('precision must be a postive integer '
-                                  'or zero.')
     if method == 'common':
         return round(value, precision)
     func = getattr(math, method)
-    if precision:
-        return func(value * 10 * precision) / (10 * precision)
-    else:
-        return func(value)
-
-
-def do_sort(value, reverse=False):
-    """Sort a sequence. Per default it sorts ascending, if you pass it
-    true as first argument it will reverse the sorting.
-    """
-    return sorted(value, reverse=reverse)
+    return func(value * (10 ** precision)) / (10 ** precision)
 
 
 @environmentfilter
@@ -708,7 +713,6 @@ FILTERS = {
     'sum':                  sum,
     'abs':                  abs,
     'round':                do_round,
-    'sort':                 do_sort,
     'groupby':              do_groupby,
     'safe':                 do_mark_safe,
     'xmlattr':              do_xmlattr
