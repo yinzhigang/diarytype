@@ -5,20 +5,26 @@ import web
 from comment.models import Comment
 from util.template import render
 from util import requires_admin
-from util.pager import PagerQuery
+# from util.pager import PagerQuery
+from util.pager import Pager
 
 class comments(object):
     """评论管理"""
     @requires_admin
     def GET(self):
         inp = web.input()
-        bookmark = inp.get('bookmark')
-        
-        query = PagerQuery(Comment).order('-created')
-        prev, comments, next = query.fetch(10, bookmark)
+        # bookmark = inp.get('bookmark')
+        # 
+        # query = PagerQuery(Comment).order('-created')
+        # prev, comments, next = query.fetch(10, bookmark)
+        page = inp.get('page')
+        if not page:
+            page = 1
+        pager = Pager(Comment, 10).order('-created')
+        comments = pager.fetch(page)
         
         return render('admin/comments.html',
-                      comments=comments,prev=prev,next=next)
+                      comments=comments,pager=pager)#prev=prev,next=next)
 
 class delete(object):
     """删除选中评论"""

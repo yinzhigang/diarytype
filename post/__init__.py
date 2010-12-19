@@ -77,7 +77,7 @@ class tag_post(BaseFront):
         pager.filter('tags =', tag_name)
         posts = pager.fetch(page)
         
-        return render('theme/index.html',posts=posts,prev=prev,next=next)
+        return render('theme/index.html',posts=posts,pager=pager)#prev=prev,next=next)
 
 class show(BaseFront):
     """显示单篇日志"""

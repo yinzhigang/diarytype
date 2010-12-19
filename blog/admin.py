@@ -153,5 +153,7 @@ class clear_cache(object):
     @requires_admin
     def GET(self):
         memcache.flush_all()
+        import jinja2
+        jinja2.clear_caches()
         
         raise web.seeother('/admin/setting')
