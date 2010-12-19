@@ -8,20 +8,29 @@ from post.models import Post, Tag
 from category.models import Category
 from util.template import render
 from util import requires_admin
-from util.pager import PagerQuery
+# from util.pager import PagerQuery
+from util.pager import Pager
 
 class posts(object):
     """日志列表处理"""
     @requires_admin
     def GET(self):
         inp = web.input()
-        bookmark = inp.get('bookmark')
+        page = inp.get('page')
+        if not page:
+            page = 1
+        # offset = (page - 1) * 10
+        # bookmark = inp.get('bookmark')
         
-        query = PagerQuery(Post).order('-date')
-        prev, posts, next = query.fetch(10, bookmark)
+        # query = PagerQuery(Post).order('-date')
+        # prev, posts, next = query.fetch(10, bookmark)
         # posts = Post.all().order('-date')
+        pager = Pager(Post, 10).order('-date')
+        posts = pager.fetch(page)
+        # posts = Post.all().order('-date').fetch(10, offset)
+        # count = Post.all().count()
         
-        return render('admin/posts.html',posts=posts,prev=prev,next=next)
+        return render('admin/posts.html',posts=posts,pager=pager)#prev=prev,next=next)
 
 class edit(object):
     """日志新增修改"""

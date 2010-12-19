@@ -42,27 +42,26 @@ def load_theme(name):
     """加载自定义模板,优先扫描数据库数据,而后扫描本地文件"""
     theme = blog.theme
     
-    theme_file_query = ThemeFile.all().filter('theme_name =', theme)
-    theme_file_query.filter('filename =', name)
-    theme_file_query.filter('filetype =', 'template')
-    theme_file = theme_file_query.get()
-    
-    if not theme_file:
-        logging.info('no template')
-        source = None
+    theme_path = os.path.join(THEME_TEMPLATE_DIR, theme)
+    if os.path.isdir(theme_path):
+        try:
+            filename = os.path.join(theme_path, name)
+            f = open(filename)
+            source = f.read().decode('utf-8')
+            f.close()
+        except IOError:
+            source = None
     else:
-        source = theme_file.filecontent.decode('utf-8')
-    # theme_path = os.path.join(THEME_TEMPLATE_DIR, theme)
-    # if os.path.isdir(theme_path):
-    #     try:
-    #         filename = os.path.join(theme_path, name)
-    #         f = open(filename)
-    #         source = f.read().decode('utf-8')
-    #         f.close()
-    #     except IOError:
-    #         source = None
-    # else:
-    #     source = None
+        theme_file_query = ThemeFile.all().filter('theme_name =', theme)
+        theme_file_query.filter('filename =', name)
+        theme_file_query.filter('filetype =', 'template')
+        theme_file = theme_file_query.get()
+
+        if not theme_file:
+            logging.info('no template')
+            source = None
+        else:
+            source = theme_file.filecontent.decode('utf-8')
     return source, None, lambda: False
 
 loader = PerformancePrefixLoader({

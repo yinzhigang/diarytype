@@ -1,12 +1,9 @@
 application: diarytype
-version: 5
+version: 30
 runtime: python
 api_version: 1
 
 default_expiration: "30d"
-
-derived_file_type:
-- python_precompiled
 
 handlers:
 - url: /remote_api
@@ -35,15 +32,19 @@ handlers:
 - url: .*
   script: main.py
 
-# skip_files: |
-#     ^(.*/)?(
-#     (app\.yaml)|
-#     (app\.yml)|
-#     (index\.yaml)|
-#     (index\.yml)|
-#     (#.*#)|
-#     (.*~)|
-#     (.*\.py[co])|
-#     (.*/RCS/.*)|
-#     (\..*)|
-#     )$
+builtins:
+  - datastore_admin: on
+
+skip_files: |
+    ^(.*/)?(
+    (app\.yaml)|
+    (app\.yml)|
+    (index\.yaml)|
+    (index\.yml)|
+    (#.*#)|
+    (.*~)|
+    (.*\.py[co])|
+    (.*/RCS/.*)|
+    (\..*)|
+    (nbproject)|
+    )$

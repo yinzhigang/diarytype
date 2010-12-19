@@ -10,7 +10,8 @@ from category.models import Category
 from comment.models import Comment
 
 from util.template import render
-from util.pager import PagerQuery
+# from util.pager import PagerQuery
+from util.pager import Pager
 
 PAGE_SIZE = 10
 
@@ -18,12 +19,18 @@ class posts(BaseFront):
     """首页文章列表"""
     def GET(self):
         inp = web.input()
-        bookmark = inp.get('bookmark')
+        # bookmark = inp.get('bookmark')
+        # 
+        # query = PagerQuery(Post).filter('hidden =',False).order('-date')
+        # prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
+        page = inp.get('page')
+        if not page:
+            page = 1
+        pager = Pager(Post, blog.post_pagesize).order('-date')
+        pager.filter('hidden =', False)
+        posts = pager.fetch(page)
         
-        query = PagerQuery(Post).filter('hidden =',False).order('-date')
-        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
-        
-        return render('theme/index.html',posts=posts,prev=prev,next=next)
+        return render('theme/index.html',posts=posts,pager=pager)#prev=prev,next=next)
 
 class category_post(BaseFront):
     """显示分类文章"""
@@ -34,14 +41,21 @@ class category_post(BaseFront):
             category = Category.all().filter('alias =', category_name).get()
         
         inp = web.input()
-        bookmark = inp.get('bookmark')
-            
-        query = PagerQuery(Post).filter('hidden =', False)
-        query.filter('category =', category)
-        query.order('-date')
-        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
+        # bookmark = inp.get('bookmark')
+        # 
+        # query = PagerQuery(Post).filter('hidden =', False)
+        # query.filter('category =', category)
+        # query.order('-date')
+        # prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
+        page = inp.get('page')
+        if not page:
+            page = 1
+        pager = Pager(Post, blog.post_pagesize).order('-date')
+        pager.filter('hidden =', False)
+        pager.filter('category =', category)
+        posts = pager.fetch(page)
         
-        return render('theme/index.html',posts=posts,prev=prev,next=next)
+        return render('theme/index.html',posts=posts,pager=pager)#prev=prev,next=next)
 
 class tag_post(BaseFront):
     """显示Tag文章列表"""
@@ -49,12 +63,19 @@ class tag_post(BaseFront):
         # tag = Tag.all().filter('name =', tag_name).get()
         
         inp = web.input()
-        bookmark = inp.get('bookmark')
-        
-        query = PagerQuery(Post).filter('hidden =', False)
-        query.filter('tags =', tag_name)
-        query.order('-date')
-        prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
+        # bookmark = inp.get('bookmark')
+        # 
+        # query = PagerQuery(Post).filter('hidden =', False)
+        # query.filter('tags =', tag_name)
+        # query.order('-date')
+        # prev, posts, next = query.fetch(blog.post_pagesize, bookmark)
+        page = inp.get('page')
+        if not page:
+            page = 1
+        pager = Pager(Post, blog.post_pagesize).order('-date')
+        pager.filter('hidden =', False)
+        pager.filter('tags =', tag_name)
+        posts = pager.fetch(page)
         
         return render('theme/index.html',posts=posts,prev=prev,next=next)
 

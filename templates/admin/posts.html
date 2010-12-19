@@ -39,11 +39,22 @@
           {%- endfor %}
         </tbody>
       </table>
-      {% if prev %}
-      <a href="?bookmark={{ prev }}">上一页</a>
+      {% if not pager.isFirstPage() %}
+      <a href="?page={{ pager.getFirstPage() }}">第一页</a>
+      <a href="?page={{ pager.getPreviousPage() }}">上一页</a>
       {% endif %}
-      {% if next %}
-      <a href="?bookmark={{ next }}">下一页</a>
+      
+      {% for link in pager.getLinks(10) %}
+        {% if link == pager.getPage() %}
+        {{ link }}
+        {% else %}
+        <a href="?page={{ link }}">{{ link }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if not pager.isLastPage() %}
+      <a href="?page={{ pager.getNextPage() }}">下一页</a>
+      <a href="?page={{ pager.getLastPage() }}">最末页</a>
       {% endif %}
     </div>
     <div class="clear"></div>
