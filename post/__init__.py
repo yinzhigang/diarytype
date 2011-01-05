@@ -82,28 +82,31 @@ class tag_post(BaseFront):
 class show(BaseFront):
     """显示单篇日志"""
     def GET(self, post_url=None):
-        import hashlib
-        post_id = post_url
-        post = Post.get_by_id(int(post_id))
-        if not post:
+        try:
+            import hashlib
+            post_id = post_url
+            post = Post.get_by_id(int(post_id))
+            if not post:
+                raise web.notfound()
+        
+            fullpath = web.ctx.home + web.ctx.fullpath
+            check = "%s%s" % (fullpath, post.key())
+            checksum = hashlib.sha1(check).hexdigest()
+        
+            comments_query = Comment.all().filter('post =', post)
+            if blog.comment_sort == 'asc':
+                comments_query.order('created')
+            else:
+                comments_query.order('-created')
+        
+            comments = comments_query.fetch(blog.comment_pagesize)
+        
+            return render('theme/show.html',
+                          post=post,
+                          checksum=checksum,
+                          comments=comments)
+        except:
             raise web.notfound()
-        
-        fullpath = web.ctx.home + web.ctx.fullpath
-        check = "%s%s" % (fullpath, post.key())
-        checksum = hashlib.sha1(check).hexdigest()
-        
-        comments_query = Comment.all().filter('post =', post)
-        if blog.comment_sort == 'asc':
-            comments_query.order('created')
-        else:
-            comments_query.order('-created')
-        
-        comments = comments_query.fetch(blog.comment_pagesize)
-        
-        return render('theme/show.html',
-                      post=post,
-                      checksum=checksum,
-                      comments=comments)
 
 class feed(BaseFront):
     """种子输出"""

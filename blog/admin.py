@@ -148,6 +148,11 @@ class install(object):
         
         raise web.seeother('/admin')
 
+class warmup(object):
+    """供 Appengine 内部调用"""
+    def GET(self):
+        pass
+        
 class clear_cache(object):
     """清除memcache缓存"""
     @requires_admin

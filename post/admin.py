@@ -111,7 +111,7 @@ class edit(object):
         
         clear_cache()
         
-        from google.appengine.api.labs import taskqueue
+        from google.appengine.api import taskqueue
         queue = taskqueue.Queue()
         url = '/task/ping_sites'
         ping_task = taskqueue.Task(countdown=5, url=url)

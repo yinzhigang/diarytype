@@ -5,6 +5,7 @@ import os
 VERSION = '0.1.0'
 
 urls = (
+    '/_ah/warmup.*', 'blog.admin.warmup',
     '/admin/install', 'blog.admin.install',
     
     '/admin/?', 'blog.admin.dashboard',
