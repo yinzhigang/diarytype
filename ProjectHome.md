@@ -1,0 +1,1 @@
+Diary Type blog system for Google App Engine
